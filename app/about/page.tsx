@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Page } from "@/components/layout/Page";
-import { Magnetic } from "@/components/interaction/Magnetic";
 import { Reveal, Rise } from "@/components/motion/Reveal";
 
 export const metadata: Metadata = {
@@ -164,12 +163,10 @@ export default function AboutPage() {
                 Career trajectory &amp; <span className="voice-serif font-normal">education</span>
               </h2>
             </div>
-            <Magnetic>
-              <Link href="/cv" className="bp-btn bp-btn--primary">
-                <span>Printable CV</span>
-                <span className="bp-btn__icon">→</span>
-              </Link>
-            </Magnetic>
+            <Link href="/cv" className="bp-btn bp-btn--primary">
+              <span>Printable CV</span>
+              <span className="bp-btn__icon">→</span>
+            </Link>
           </div>
 
           <div className="focus-list divide-y divide-[var(--line)] border-y border-[var(--line)]">

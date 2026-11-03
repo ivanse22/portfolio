@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Page } from "@/components/layout/Page";
-import { Magnetic } from "@/components/interaction/Magnetic";
 import { Reveal, Rise } from "@/components/motion/Reveal";
 
 export default function ContactPage() {
@@ -40,33 +39,27 @@ export default function ContactPage() {
           </Rise>
 
           <Rise delay={0.18} className="flex flex-wrap gap-3 pt-4">
-            <Magnetic>
-              <button
-                type="button"
-                onClick={copyEmail}
-                className="bp-btn bp-btn--primary cursor-pointer"
-              >
-                <span>{copied ? "Copied: ivan.se22@gmail.com" : "Copy: ivan.se22@gmail.com"}</span>
-                <span className="bp-btn__icon">{copied ? "✓" : "⧉"}</span>
-              </button>
-            </Magnetic>
+            <button
+              type="button"
+              onClick={copyEmail}
+              className="bp-btn bp-btn--primary cursor-pointer"
+            >
+              <span>{copied ? "Copied: ivan.se22@gmail.com" : "Copy: ivan.se22@gmail.com"}</span>
+              <span className="bp-btn__icon">{copied ? "✓" : "⧉"}</span>
+            </button>
 
-            <Magnetic>
-              <a
-                href="mailto:ivan.se22@gmail.com?subject=Opportunity%20for%20Ivan%20Sierra%20(UI%2FUX%20%26%20Design%20Systems)"
-                className="bp-btn bp-btn--ghost"
-              >
-                <span>Open Email Client</span>
-                <span className="bp-btn__icon">↗</span>
-              </a>
-            </Magnetic>
+            <a
+              href="mailto:ivan.se22@gmail.com?subject=Opportunity%20for%20Ivan%20Sierra%20(UI%2FUX%20%26%20Design%20Systems)"
+              className="bp-btn bp-btn--ghost"
+            >
+              <span>Open Email Client</span>
+              <span className="bp-btn__icon">↗</span>
+            </a>
 
-            <Magnetic>
-              <Link href="/cv" className="bp-btn bp-btn--ghost">
-                <span>Printable CV</span>
-                <span className="bp-btn__icon">→</span>
-              </Link>
-            </Magnetic>
+            <Link href="/cv" className="bp-btn bp-btn--ghost">
+              <span>Printable CV</span>
+              <span className="bp-btn__icon">→</span>
+            </Link>
           </Rise>
         </div>
 

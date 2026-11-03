@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Page } from "@/components/layout/Page";
 import { ProjectPlate } from "@/components/blocks/ProjectPlate";
-import { Magnetic } from "@/components/interaction/Magnetic";
 import { Reveal, Rise } from "@/components/motion/Reveal";
 import { projects } from "@/lib/projects";
 
@@ -42,18 +41,14 @@ export default function Home() {
             </Rise>
 
             <Rise delay={0.22} className="lg:col-span-5 flex flex-wrap lg:justify-end items-center gap-3">
-              <Magnetic>
-                <a href="#work" className="bp-btn bp-btn--primary">
-                  <span>Selected work</span>
-                  <span className="bp-btn__icon">↓</span>
-                </a>
-              </Magnetic>
-              <Magnetic>
-                <Link href="/cv" className="bp-btn bp-btn--ghost">
-                  <span>Resume / CV</span>
-                  <span className="bp-btn__icon">→</span>
-                </Link>
-              </Magnetic>
+              <a href="#work" className="bp-btn bp-btn--primary">
+                <span>Selected work</span>
+                <span className="bp-btn__icon">↓</span>
+              </a>
+              <Link href="/cv" className="bp-btn bp-btn--ghost">
+                <span>Resume / CV</span>
+                <span className="bp-btn__icon">→</span>
+              </Link>
             </Rise>
           </div>
 
