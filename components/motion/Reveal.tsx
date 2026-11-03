@@ -1,7 +1,47 @@
 "use client";
 
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
+
+function useEnterViewport<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    // If already within (or above) the viewport on mount, trigger immediately
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.96) {
+      setVisible(true);
+      return;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      setVisible(true);
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setVisible(true);
+            io.disconnect();
+            break;
+          }
+        }
+      },
+      { threshold: 0.05, rootMargin: "0px 0px -4% 0px" },
+    );
+
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return { ref, visible };
+}
 
 /** Masked line reveal — text stays real in the DOM (a11y/SEO safe). */
 export function Reveal({
@@ -14,21 +54,22 @@ export function Reveal({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  const { ref, visible } = useEnterViewport<HTMLSpanElement>();
+
   return (
-    <motion.span
-      className={`block overflow-hidden pb-[0.08em] -mb-[0.08em] ${className ?? ""}`}
-      initial={reduce ? false : "hidden"}
-      whileInView="show"
-      viewport={{ once: true, amount: 0.05 }}
+    <span
+      ref={ref}
+      className={`block overflow-hidden pt-[0.06em] -mt-[0.06em] pb-[0.1em] -mb-[0.1em] ${className ?? ""}`}
     >
       <motion.span
         className="block"
-        variants={{ hidden: { y: "105%" }, show: { y: "0%" } }}
+        initial={reduce ? false : { y: "105%" }}
+        animate={reduce || visible ? { y: "0%" } : { y: "105%" }}
         transition={{ duration: 0.85, delay, ease: [0.16, 1, 0.3, 1] }}
       >
         {children}
       </motion.span>
-    </motion.span>
+    </span>
   );
 }
 
@@ -43,12 +84,14 @@ export function Rise({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  const { ref, visible } = useEnterViewport<HTMLDivElement>();
+
   return (
     <motion.div
+      ref={ref}
       className={className}
       initial={reduce ? false : { opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.05 }}
+      animate={reduce || visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}

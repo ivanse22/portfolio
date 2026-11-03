@@ -87,9 +87,9 @@ export default function Home() {
             <h2 className="lg:col-span-8 text-[clamp(48px,7vw,108px)] font-semibold leading-[0.92] tracking-[-0.045em]">
               <Reveal>
                 Selected <span className="voice-serif">work</span>
-                <sup className="ml-3 inline-block align-top mt-[0.5em] font-mono text-[0.16em] font-normal tracking-normal text-[var(--ink-3)]">
+                <span className="ml-3 align-baseline font-mono text-[0.22em] font-normal tracking-normal text-[var(--ink-3)]">
                   ({String(featured.length).padStart(2, "0")})
-                </sup>
+                </span>
               </Reveal>
             </h2>
             <Rise className="lg:col-span-4 space-y-4">

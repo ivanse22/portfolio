@@ -1,7 +1,7 @@
 "use client";
 
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
 
 /**
  * Image-style reveal for project visuals: the frame opens from a slight inset
@@ -9,20 +9,47 @@ import type { ReactNode } from "react";
  */
 export function RevealFrame({ children, className }: { children: ReactNode; className?: string }) {
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.96) {
+      setVisible(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.1 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <motion.div
+      ref={ref}
       className={`overflow-hidden rounded-[4px] ${className ?? ""}`}
-      initial={reduce ? false : { clipPath: "inset(8% 4% 8% 4% round 4px)" }}
-      whileInView={{ clipPath: "inset(0% 0% 0% 0% round 4px)" }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+      initial={reduce ? false : { clipPath: "inset(6% 3% 6% 3% round 4px)" }}
+      animate={
+        reduce || visible
+          ? { clipPath: "inset(0% 0% 0% 0% round 4px)" }
+          : { clipPath: "inset(6% 3% 6% 3% round 4px)" }
+      }
+      transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1] }}
     >
       <motion.div
         className="h-full"
-        initial={reduce ? false : { scale: 1.06 }}
-        whileInView={{ scale: 1 }}
-        viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1] }}
+        initial={reduce ? false : { scale: 1.05 }}
+        animate={reduce || visible ? { scale: 1 } : { scale: 1.05 }}
+        transition={{ duration: 1.25, ease: [0.16, 1, 0.3, 1] }}
       >
         {children}
       </motion.div>
