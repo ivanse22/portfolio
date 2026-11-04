@@ -4,6 +4,59 @@ import Link from "next/link";
 import { Page } from "@/components/layout/Page";
 
 export default function CVDossierPage() {
+  const experience = [
+    {
+      role: "UI Designer",
+      company: "Twilio",
+      period: "June 2024 — Present",
+      bullets: [
+        "Design and maintain scalable UI components for Twilio’s global marketing website, ensuring strict alignment with the company’s design system.",
+        "Collaborate with developers, product managers, and content teams within an agile environment to deliver high-fidelity landing pages focused on user conversion.",
+        "Create and document reusable visual modules to streamline developer handoff, improve consistency, and reduce implementation time across teams.",
+      ],
+    },
+    {
+      role: "Senior UI & Visual Designer",
+      company: "PGD Publicis",
+      period: "2020 — Present",
+      bullets: [
+        "Lead interface design and visual direction for CJ Affiliate’s digital ecosystem, including responsive websites and content hubs.",
+        "Translate complex marketing and business requirements into intuitive UI layouts, interaction flows, and interactive prototypes.",
+        "Manage the end-to-end design process for digital assets, ensuring accessibility compliance and pixel-perfect execution across devices.",
+      ],
+    },
+    {
+      role: "Senior Art Director",
+      company: "Nobox",
+      period: "2018 — 2020",
+      bullets: [
+        "Partnered with global brands (Marriott CALA, Sheraton) to transform their digital presence through responsive web design and video content.",
+        "Designed e-commerce interfaces and digital campaigns, focusing on user retention and visual storytelling.",
+        "Led remote creative teams to deliver high-quality digital products within tight deadlines.",
+      ],
+    },
+    {
+      role: "Senior Art Director",
+      company: "Beat MullenLowe SSP3",
+      period: "2016 — 2018",
+      bullets: [
+        "Led the digital design department, overseeing the creation of mobile applications, e-commerce platforms, and large-scale web projects.",
+        "Directed UI strategies for major clients like BMW, Hyundai, and Nestlé, ensuring high visual standards and brand compliance.",
+        "Mentored junior designers and implemented efficient workflows for digital production and prototyping.",
+      ],
+    },
+    {
+      role: "Senior Art Director (Digital Dept.)",
+      company: "Sistole – Sancho BBDO",
+      period: "2014 — 2016",
+      bullets: [
+        "Led interface design and visual direction for digital ecosystems, including responsive websites and content hubs.",
+        "Translated complex marketing requirements into intuitive, user-friendly UI layouts and interactive prototypes.",
+        "Managed the end-to-end design process for digital assets, ensuring accessibility standards and pixel-perfect execution across devices.",
+      ],
+    },
+  ];
+
   return (
     <Page className="px-[var(--pad-x)] pt-12 pb-20">
       <div className="max-w-[1080px] mx-auto w-full">
@@ -17,14 +70,24 @@ export default function CVDossierPage() {
             <span>←</span>
             <span className="link-underline">Back to portfolio</span>
           </Link>
-          <button
-            type="button"
-            onClick={() => window.print()}
-            className="bp-btn bp-btn--primary cursor-pointer"
-          >
-            <span>Print / Save as PDF</span>
-            <span className="bp-btn__icon">↓</span>
-          </button>
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href="/Ivan_Sierra_CV.pdf"
+              download="Ivan_Sierra_CV.pdf"
+              className="bp-btn bp-btn--primary"
+            >
+              <span>Download Original PDF</span>
+              <span className="bp-btn__icon">↓</span>
+            </a>
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="bp-btn bp-btn--ghost cursor-pointer"
+            >
+              <span>Print Web View</span>
+              <span className="bp-btn__icon">⎙</span>
+            </button>
+          </div>
         </div>
 
         {/* Printable CV Sheet */}
@@ -37,12 +100,13 @@ export default function CVDossierPage() {
                 Ivan Sierra
               </h1>
               <p className="text-lg md:text-xl font-medium text-[var(--ink-2)]">
-                Senior UI/UX Designer · Experience Designer · Design Systems &amp; IA
+                UI/UX Designer · Interaction and Experience Designer
               </p>
             </div>
 
             <div className="font-mono text-xs space-y-1 text-[var(--ink-2)] md:text-right">
-              <div>Bogotá, Colombia (GMT-5 · Remote)</div>
+              <div>Bogotá, Colombia · Open to remote roles</div>
+              <div>LATAM-based · Full overlap with EST</div>
               <div>
                 <a href="mailto:ivan.se22@gmail.com" className="text-[var(--ink)] underline">
                   ivan.se22@gmail.com
@@ -61,138 +125,162 @@ export default function CVDossierPage() {
             </div>
           </header>
 
-          {/* Executive Summary */}
-          <section className="space-y-2">
-            <h2 className="font-mono text-xs text-[var(--signal)]">01 / Summary</h2>
+          {/* Description Profile */}
+          <section className="space-y-3">
+            <h2 className="font-mono text-xs text-[var(--signal)]">01 / Profile</h2>
             <p className="text-sm md:text-base text-[var(--ink-2)] leading-relaxed">
-              UI/UX and Experience Designer with{" "}
-              <strong className="text-[var(--ink)] font-medium">13+ years</strong> of experience
-              designing scalable web products, multi-brand design systems, and high-clarity
-              information architecture for global tech companies. Currently designing at{" "}
-              <strong className="text-[var(--ink)] font-medium">Twilio</strong>. Holds an{" "}
-              <strong className="text-[var(--ink)] font-medium">MSc in UX Design from UOC</strong>{" "}
-              with <em>Matrícula de Honor</em> in Information Architecture. Proven ability to
-              bridge Figma token architecture with production code (React, Tailwind CSS,
-              HubSpot CMS).
+              Senior UI/UX Designer with{" "}
+              <strong className="text-[var(--ink)] font-medium">13+ years of experience</strong>{" "}
+              in digital product design, combining strong visual design foundations with advanced
+              UX and interaction design methodologies. Proven background designing SaaS and B2B
+              platforms, marketing websites, and scalable design systems for global companies.
+            </p>
+            <p className="text-sm md:text-base text-[var(--ink-2)] leading-relaxed">
+              Experienced in cross-functional collaboration within agile teams, translating
+              complex business and technical requirements into intuitive, accessible, and
+              high-performing user interfaces. Strong focus on design systems, usability,
+              accessibility (WCAG), and conversion-driven design.
             </p>
           </section>
 
           {/* Experience */}
           <section className="space-y-6">
             <h2 className="font-mono text-xs text-[var(--signal)] border-b border-[var(--line)] pb-2">
-              02 / Professional Experience (13+ Years)
+              02 / Professional Experience
             </h2>
 
-            <div className="space-y-6">
-              <div>
-                <div className="flex flex-wrap justify-between items-baseline gap-2">
-                  <h3 className="text-lg font-semibold">UI Designer — Twilio</h3>
-                  <span className="font-mono text-xs text-[var(--signal)]">2024 — Present</span>
+            <div className="space-y-8">
+              {experience.map((job) => (
+                <div key={`${job.company}-${job.period}`} className="space-y-2.5">
+                  <div className="flex flex-wrap justify-between items-baseline gap-2">
+                    <h3 className="text-lg font-semibold">
+                      {job.role} — <span className="text-[var(--ink-2)]">{job.company}</span>
+                    </h3>
+                    <span className="font-mono text-xs text-[var(--ink-3)]">{job.period}</span>
+                  </div>
+                  <ul className="space-y-1.5 text-sm text-[var(--ink-2)] leading-relaxed">
+                    {job.bullets.map((b) => (
+                      <li key={b} className="flex gap-2.5">
+                        <span className="text-[var(--ink-3)] select-none">•</span>
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <p className="text-sm text-[var(--ink-2)] mt-2 leading-relaxed">
-                  Craft high-conversion web pages, landing systems, and modular UI components for
-                  Twilio’s global web presence. Maintain and evolve the design system to ensure
-                  1:1 consistency, accessibility, and scalability across marketing and product
-                  surfaces.
-                </p>
+              ))}
+            </div>
+          </section>
+
+          {/* Education & Certifications */}
+          <section className="space-y-6">
+            <h2 className="font-mono text-xs text-[var(--signal)] border-b border-[var(--line)] pb-2">
+              03 / Education &amp; Certifications
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between items-baseline gap-2">
+                    <h3 className="text-base font-semibold">
+                      Master’s Degree in Interaction Design &amp; User Experience
+                    </h3>
+                    <span className="font-mono text-xs text-[var(--signal)] shrink-0">UOC</span>
+                  </div>
+                  <p className="text-xs font-mono text-[var(--ink-2)] mt-0.5">
+                    Universitat Oberta de Catalunya
+                  </p>
+                  <p className="text-sm text-[var(--ink-2)] mt-1">
+                    Focus on User Research, Information Architecture (Matrícula de Honor),
+                    Usability Testing, and Human-Computer Interaction (HCI).
+                  </p>
+                </div>
+
+                <div>
+                  <div className="flex justify-between items-baseline gap-2">
+                    <h3 className="text-base font-semibold">B.A. in Graphic Design</h3>
+                    <span className="font-mono text-xs text-[var(--ink-3)] shrink-0">2015</span>
+                  </div>
+                  <p className="text-xs font-mono text-[var(--ink-2)] mt-0.5">
+                    Universidad Los Libertadores
+                  </p>
+                </div>
               </div>
 
-              <div>
-                <div className="flex flex-wrap justify-between items-baseline gap-2">
-                  <h3 className="text-lg font-semibold">
-                    Senior UI/UX Designer &amp; Design Systems Lead — CJ.com
-                  </h3>
-                  <span className="font-mono text-xs text-[var(--ink-2)]">2022 — 2024</span>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between items-baseline gap-2">
+                    <h3 className="text-base font-semibold">Certified Product Designer</h3>
+                    <span className="font-mono text-xs text-[var(--ink-3)] shrink-0">2023</span>
+                  </div>
+                  <p className="text-xs font-mono text-[var(--ink-2)]">Dribbble</p>
+                  <p className="text-sm text-[var(--ink-2)] mt-0.5">
+                    End-to-end product design training, from research to high-fidelity
+                    prototyping.
+                  </p>
                 </div>
-                <p className="text-sm text-[var(--ink-2)] mt-2 leading-relaxed">
-                  Architected the CJ Design System &amp; UI Kit from atomic tokens to documented
-                  multi-variant Figma components aligned 1:1 with HubSpot CRM and front-end
-                  frameworks. Led the Information Architecture overhaul and responsive Mega-Menu
-                  system accommodating 3 new strategic business verticals.
-                </p>
-              </div>
 
-              <div>
-                <div className="flex flex-wrap justify-between items-baseline gap-2">
-                  <h3 className="text-lg font-semibold">
-                    UI / Visual &amp; Experience Designer — Torre &amp; Global Clients
-                  </h3>
-                  <span className="font-mono text-xs text-[var(--ink-2)]">2020 — 2022</span>
+                <div>
+                  <div className="flex justify-between items-baseline gap-2">
+                    <h3 className="text-base font-semibold">Design Systems Bootcamp</h3>
+                    <span className="font-mono text-xs text-[var(--ink-3)] shrink-0">2022</span>
+                  </div>
+                  <p className="text-xs font-mono text-[var(--ink-2)]">Memorisely</p>
+                  <p className="text-sm text-[var(--ink-2)] mt-0.5">
+                    Specialized training in scalable design systems, tokenization, and component
+                    libraries using Figma.
+                  </p>
                 </div>
-                <p className="text-sm text-[var(--ink-2)] mt-2 leading-relaxed">
-                  Designed conversion-focused digital products, event identities (Remote Hiring
-                  Bootcamp by Torre), and responsive web architectures across Latin America and US
-                  markets.
-                </p>
-              </div>
 
-              <div>
-                <div className="flex flex-wrap justify-between items-baseline gap-2">
-                  <h3 className="text-lg font-semibold">
-                    Senior Digital Designer &amp; Art Director — Digital Agencies &amp; Brands
-                  </h3>
-                  <span className="font-mono text-xs text-[var(--ink-2)]">2013 — 2020</span>
+                <div>
+                  <div className="flex justify-between items-baseline gap-2">
+                    <h3 className="text-base font-semibold">
+                      Interface Design &amp; Usability Certifications
+                    </h3>
+                    <span className="font-mono text-xs text-[var(--ink-3)] shrink-0">2020</span>
+                  </div>
+                  <p className="text-xs font-mono text-[var(--ink-2)]">Platzi</p>
+                  <p className="text-sm text-[var(--ink-2)] mt-0.5">
+                    UI design, UX research, and accessibility fundamentals.
+                  </p>
                 </div>
-                <p className="text-sm text-[var(--ink-2)] mt-2 leading-relaxed">
-                  Led visual design, interactive campaigns, and user-centered web products for
-                  major regional and international brands over 7+ years.
-                </p>
               </div>
             </div>
           </section>
 
-          {/* Education */}
+          {/* Skills & Tools */}
           <section className="space-y-4">
             <h2 className="font-mono text-xs text-[var(--signal)] border-b border-[var(--line)] pb-2">
-              03 / Education &amp; Honors
-            </h2>
-            <div className="flex flex-wrap justify-between items-baseline gap-2">
-              <div>
-                <h3 className="text-base font-semibold">
-                  Master’s Degree (MSc) in User Experience (UX) Design
-                </h3>
-                <p className="text-sm text-[var(--ink-2)]">
-                  Universitat Oberta de Catalunya (UOC), Barcelona · Awarded{" "}
-                  <strong className="text-[var(--ink)] font-medium">
-                    Matrícula de Honor in Information Architecture
-                  </strong>
-                </p>
-              </div>
-              <span className="font-mono text-xs text-[var(--signal)]">Honors</span>
-            </div>
-          </section>
-
-          {/* Core Competencies */}
-          <section className="space-y-4">
-            <h2 className="font-mono text-xs text-[var(--signal)] border-b border-[var(--line)] pb-2">
-              04 / Core Competencies &amp; Stack
+              04 / Skills, Tools &amp; Languages
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm">
               <div>
-                <div className="font-mono text-xs text-[var(--ink)] font-semibold mb-1">
-                  Design Systems &amp; UI
+                <div className="font-mono text-xs text-[var(--ink)] font-semibold mb-1.5">
+                  Main Skills
                 </div>
-                <p className="text-[var(--ink-2)]">
-                  Figma, Design Tokens, Atomic Design, Component Variants, Accessibility (WCAG
-                  AA/AAA), Micro-interactions.
+                <p className="text-[var(--ink-2)] leading-relaxed">
+                  Product Design · User Interface (UI) · Interaction Design (IxD) · Design
+                  Systems · Information Architecture · Prototyping &amp; Wireframing · User
+                  Research &amp; Testing · Accessibility (WCAG).
                 </p>
               </div>
               <div>
-                <div className="font-mono text-xs text-[var(--ink)] font-semibold mb-1">
-                  UX &amp; Info Architecture
+                <div className="font-mono text-xs text-[var(--ink)] font-semibold mb-1.5">
+                  Tools &amp; Platforms
                 </div>
-                <p className="text-[var(--ink-2)]">
-                  Taxonomy &amp; Sitemaps, Card Sorting, Tree Testing, Usability Testing, User
-                  Interviews, JTBD, Wireframing.
+                <p className="text-[var(--ink-2)] leading-relaxed">
+                  Figma &amp; FigJam · Design Tokens &amp; Tokenization · Component-based Design ·
+                  Responsive &amp; Mobile-First Design · CMS-driven Websites · Collaboration with
+                  Engineering &amp; Product Teams.
                 </p>
               </div>
               <div>
-                <div className="font-mono text-xs text-[var(--ink)] font-semibold mb-1">
-                  Code &amp; Platforms
+                <div className="font-mono text-xs text-[var(--ink)] font-semibold mb-1.5">
+                  Languages &amp; Location
                 </div>
-                <p className="text-[var(--ink-2)]">
-                  React, Next.js, Tailwind CSS, HTML/CSS, HubSpot CMS Alignment, Framer, Webflow,
-                  Git Workflow.
+                <p className="text-[var(--ink-2)] leading-relaxed">
+                  Spanish (Native) · English (Professional Working Proficiency).
+                  <br />
+                  Bogotá, Colombia · LATAM-based · Full overlap with EST.
                 </p>
               </div>
             </div>
