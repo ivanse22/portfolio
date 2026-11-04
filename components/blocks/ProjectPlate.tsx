@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ViewTransition } from "react";
 import type { Project } from "@/lib/projects";
 import { BlueprintDiagram } from "@/components/blocks/BlueprintDiagram";
 import { RevealFrame } from "@/components/motion/RevealFrame";
@@ -34,11 +33,9 @@ export function ProjectPlate({ project, total }: { project: Project; total: numb
               <span className="plate-meta">{project.pillar}</span>
             </div>
 
-            <ViewTransition name={`title-${project.slug}`} share="morph" default="none">
-              <h3 className="text-[clamp(28px,3.2vw,46px)] font-semibold leading-[1.04] tracking-[-0.035em]">
-                <span className="plate-title">{project.title}</span>
-              </h3>
-            </ViewTransition>
+            <h3 className="text-[clamp(28px,3.2vw,46px)] font-semibold leading-[1.04] tracking-[-0.035em]">
+              <span className="plate-title">{project.title}</span>
+            </h3>
 
             <p className="text-base md:text-lg leading-relaxed text-[var(--ink-2)]">
               {project.subtitle}
@@ -98,17 +95,15 @@ export function ProjectPlate({ project, total }: { project: Project; total: numb
 
         {/* ——— Right Column: Visual Content Container ——— */}
         <div className="lg:col-span-7 flex">
-          <ViewTransition name={`visual-${project.slug}`} share="morph" default="none">
-            <div className="w-full h-full">
-              <RevealFrame className="h-full">
-                <BlueprintDiagram
-                  type={project.diagramType}
-                  specCode={project.specCode}
-                  size="lg"
-                />
-              </RevealFrame>
-            </div>
-          </ViewTransition>
+          <div className="w-full h-full">
+            <RevealFrame className="h-full">
+              <BlueprintDiagram
+                type={project.diagramType}
+                specCode={project.specCode}
+                size="lg"
+              />
+            </RevealFrame>
+          </div>
         </div>
       </Link>
     </article>

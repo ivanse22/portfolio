@@ -251,7 +251,7 @@ a:hover .link-underline,
 
 /* ————————————————————————————————————————————————
    Page transitions (React <ViewTransition> + View Transitions API)
-   Old content leaves fast; new content arrives gently.
+   Pure opacity + transform (no full-screen blur filters) for locked 60/120fps.
    ———————————————————————————————————————————————— */
 ::view-transition {
   pointer-events: none;
@@ -269,54 +269,56 @@ a:hover .link-underline,
   animation: none;
 }
 
-/* Default: header links, browser back/forward */
+/* Default route change */
 ::view-transition-old(.page) {
-  animation:
-    180ms var(--ease-out-quint) both vt-fade-out,
-    240ms var(--ease-out-quint) both vt-lift-out;
+  animation: 150ms var(--ease-out-quint) both vt-fade-out;
 }
 ::view-transition-new(.page) {
-  --vt-from: 16px;
+  --vt-from: 10px;
   animation:
-    420ms var(--ease-out-expo) 140ms both vt-fade-in,
-    700ms var(--ease-out-expo) 140ms both vt-rise;
+    280ms var(--ease-out-expo) 60ms both vt-fade-in,
+    340ms var(--ease-out-expo) 60ms both vt-rise;
 }
 
 /* Going deeper (into a case study) */
 ::view-transition-old(.nav-forward) {
-  --vt-to: -28px;
+  --vt-to: -10px;
   animation:
-    200ms var(--ease-out-quint) both vt-fade-out,
-    320ms var(--ease-out-quint) both vt-lift-out;
+    150ms var(--ease-out-quint) both vt-fade-out,
+    180ms var(--ease-out-quint) both vt-lift-out;
 }
 ::view-transition-new(.nav-forward) {
-  --vt-from: 48px;
+  --vt-from: 14px;
   animation:
-    460ms var(--ease-out-expo) 160ms both vt-fade-in,
-    800ms var(--ease-out-expo) 160ms both vt-rise;
+    280ms var(--ease-out-expo) 60ms both vt-fade-in,
+    360ms var(--ease-out-expo) 60ms both vt-rise;
 }
 
 /* Coming back (to the index) */
 ::view-transition-old(.nav-back) {
-  --vt-to: 28px;
+  --vt-to: 10px;
   animation:
-    200ms var(--ease-out-quint) both vt-fade-out,
-    320ms var(--ease-out-quint) both vt-lift-out;
+    150ms var(--ease-out-quint) both vt-fade-out,
+    180ms var(--ease-out-quint) both vt-lift-out;
 }
 ::view-transition-new(.nav-back) {
-  --vt-from: -24px;
+  --vt-from: -12px;
   animation:
-    460ms var(--ease-out-expo) 160ms both vt-fade-in,
-    800ms var(--ease-out-expo) 160ms both vt-rise;
+    280ms var(--ease-out-expo) 60ms both vt-fade-in,
+    360ms var(--ease-out-expo) 60ms both vt-rise;
 }
 
-/* Shared element morph: project visual + title travel into the case hero */
+/* Shared element morph: project visual container travels smoothly into the case hero */
 ::view-transition-group(.morph) {
-  animation-duration: 700ms;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
-::view-transition-image-pair(.morph) {
-  animation: 700ms cubic-bezier(0.16, 1, 0.3, 1) both vt-morph-blur;
+::view-transition-old(.morph),
+::view-transition-new(.morph) {
+  animation-duration: 380ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  overflow: hidden;
+  border-radius: 4px;
 }
 
 @keyframes vt-fade-out {
@@ -327,29 +329,22 @@ a:hover .link-underline,
 @keyframes vt-fade-in {
   from {
     opacity: 0;
-    filter: blur(4px);
   }
   to {
     opacity: 1;
-    filter: blur(0);
   }
 }
 @keyframes vt-lift-out {
   to {
-    translate: 0 var(--vt-to, -12px);
+    translate: 0 var(--vt-to, -8px);
   }
 }
 @keyframes vt-rise {
   from {
-    translate: 0 var(--vt-from, 16px);
+    translate: 0 var(--vt-from, 10px);
   }
   to {
     translate: 0 0;
-  }
-}
-@keyframes vt-morph-blur {
-  35% {
-    filter: blur(2px);
   }
 }
 

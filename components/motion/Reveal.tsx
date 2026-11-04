@@ -3,15 +3,28 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
 
+/**
+ * Tracks whether the app has completed its initial load.
+ * On subsequent client-side route navigations, `<ViewTransition>` handles the
+ * page-level entrance—so elements starts visible immediately in the first render
+ * pass, preventing `::view-transition-new` from capturing an `opacity: 0` snapshot.
+ */
+let appHasLoadedOnce = false;
+
 function useEnterViewport<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(() => appHasLoadedOnce);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+    appHasLoadedOnce = true;
+    if (visible) return;
 
-    // If already within (or above) the viewport on mount, trigger immediately
+    const el = ref.current;
+    if (!el) {
+      setVisible(true);
+      return;
+    }
+
     const rect = el.getBoundingClientRect();
     if (rect.top < window.innerHeight * 0.96) {
       setVisible(true);
@@ -38,7 +51,7 @@ function useEnterViewport<T extends HTMLElement>() {
 
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [visible]);
 
   return { ref, visible };
 }
@@ -54,6 +67,7 @@ export function Reveal({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  const skipInitial = reduce || appHasLoadedOnce;
   const { ref, visible } = useEnterViewport<HTMLSpanElement>();
 
   return (
@@ -63,9 +77,9 @@ export function Reveal({
     >
       <motion.span
         className="block"
-        initial={reduce ? false : { y: "105%" }}
-        animate={reduce || visible ? { y: "0%" } : { y: "105%" }}
-        transition={{ duration: 0.85, delay, ease: [0.16, 1, 0.3, 1] }}
+        initial={skipInitial ? false : { y: "105%" }}
+        animate={skipInitial || visible ? { y: "0%" } : { y: "105%" }}
+        transition={{ duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] }}
       >
         {children}
       </motion.span>
@@ -84,15 +98,16 @@ export function Rise({
   className?: string;
 }) {
   const reduce = useReducedMotion();
+  const skipInitial = reduce || appHasLoadedOnce;
   const { ref, visible } = useEnterViewport<HTMLDivElement>();
 
   return (
     <motion.div
       ref={ref}
       className={className}
-      initial={reduce ? false : { opacity: 0, y: 20 }}
-      animate={reduce || visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={skipInitial ? false : { opacity: 0, y: 16 }}
+      animate={skipInitial || visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ViewTransition } from "react";
 import { notFound } from "next/navigation";
 import { Page } from "@/components/layout/Page";
 import { BlueprintDiagram } from "@/components/blocks/BlueprintDiagram";
@@ -60,27 +59,21 @@ export default async function CaseStudyPage({
             <p className="font-mono text-xs text-[var(--signal)]">
               {project.client} · {project.year}
             </p>
-            <ViewTransition name={`title-${project.slug}`} share="morph" default="none">
-              <h1 className="text-[clamp(36px,5.6vw,80px)] font-semibold tracking-[-0.04em] leading-[0.96]">
-                {project.title}
-              </h1>
-            </ViewTransition>
+            <h1 className="text-[clamp(36px,5.6vw,80px)] font-semibold tracking-[-0.04em] leading-[0.96]">
+              {project.title}
+            </h1>
             <p className="text-lg md:text-xl text-[var(--ink-2)] max-w-[60ch] leading-relaxed">
               {project.subtitle}
             </p>
           </div>
 
-          {/* Shared Element Hero Visual */}
+          {/* Hero Visual */}
           <div className="mt-12">
-            <ViewTransition name={`visual-${project.slug}`} share="morph" default="none">
-              <div>
-                <BlueprintDiagram
-                  type={project.diagramType}
-                  specCode={project.specCode}
-                  size="lg"
-                />
-              </div>
-            </ViewTransition>
+            <BlueprintDiagram
+              type={project.diagramType}
+              specCode={project.specCode}
+              size="lg"
+            />
           </div>
         </div>
       </header>
