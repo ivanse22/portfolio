@@ -141,30 +141,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ——— HOW I WORK — supporting, quieter ——— */}
+      {/* ——— HOW I WORK — UI & UX centered ——— */}
       <section className="px-[var(--pad-x)] py-20 md:py-24 border-t border-[var(--line)] bg-[var(--surface)]">
         <div className="max-w-[1360px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10">
-          <Rise className="lg:col-span-4">
+          <Rise className="lg:col-span-4 space-y-3">
             <h2 className="text-2xl md:text-3xl font-semibold tracking-[-0.03em] leading-tight">
               How I <span className="voice-serif font-normal">work</span>
             </h2>
+            <p className="text-sm text-[var(--ink-2)] leading-relaxed max-w-[34ch]">
+              Combining user-centered UX methodology with high-precision UI craft and
+              scalable systems.
+            </p>
           </Rise>
           <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
                 num: "01",
-                title: "Systems that match code",
-                desc: "Token-driven Figma libraries mapped to real DOM and CMS constraints (React, Tailwind, HubSpot).",
+                title: "User-Centered UX & IA",
+                desc: "Grounding every product in user research, clear information architecture, and intuitive flows that remove friction and lower cognitive load.",
               },
               {
                 num: "02",
-                title: "Research-led IA",
-                desc: "Card sorting, tree testing and intent-driven navigation. Honors in Information Architecture (UOC).",
+                title: "UI Craft & Interaction",
+                desc: "Designing sharp visual hierarchy, accessible interfaces (WCAG), and purposeful micro-interactions that guide users and drive conversion.",
               },
               {
                 num: "03",
-                title: "Considered craft",
-                desc: "Typographic hierarchy, accessible contrast and purposeful motion — specified, not decorated.",
+                title: "Scalable Design Systems",
+                desc: "Building tokenized component libraries and clear usage standards in Figma so teams can ship consistent experiences at scale.",
               },
             ].map((pillar, i) => (
               <Rise key={pillar.num} delay={i * 0.06} className="space-y-2">
