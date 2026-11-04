@@ -41,7 +41,8 @@
 
 :root {
   --bg: #f4f5f2;
-  --bg-2: #eaece7;
+  --bg-work: #eff1ec;
+  --bg-2: #e6e9e2;
   --surface: #ffffff;
   --ink: #111315;
   --ink-2: #5a6065;
@@ -54,7 +55,8 @@
 
 html[data-theme="dark"] {
   --bg: #0e1013;
-  --bg-2: #15181d;
+  --bg-work: #121519;
+  --bg-2: #171b21;
   --surface: #181c22;
   --ink: #f2f4f0;
   --ink-2: #949a9e;

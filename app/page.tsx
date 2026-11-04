@@ -74,7 +74,7 @@ export default function Home() {
       {/* ——— SELECTED WORK — the core of the page ——— */}
       <section
         id="work"
-        className="scroll-mt-16 px-[var(--pad-x)] pt-24 md:pt-36 pb-24 md:pb-32 border-t border-[var(--line)]"
+        className="scroll-mt-16 px-[var(--pad-x)] pt-24 md:pt-36 pb-24 md:pb-32 border-t border-[var(--line)] bg-[var(--bg-work)] transition-colors duration-350"
       >
         <div className="max-w-[1360px] mx-auto">
           {/* Section header at display scale — same rank as the hero */}
