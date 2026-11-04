@@ -29,8 +29,8 @@ export function BlueprintDiagram({
       </div>
 
       {/* UI artifact */}
-      <div className="my-auto py-8">
-        <div className={`diagram-artifact ${lg ? "md:scale-[1.18] lg:scale-[1.32]" : ""}`}>
+      <div className="my-auto py-6">
+        <div className={`diagram-artifact ${lg ? "lg:scale-[1.05]" : ""}`}>
           {type === "tokens" && (
             <div className="max-w-[460px] mx-auto bg-[var(--surface)] border border-[var(--line)] rounded-[3px] p-5 space-y-4">
               <div className="flex items-center justify-between border-b border-[var(--line)] pb-3">

@@ -6,76 +6,109 @@ import { RevealFrame } from "@/components/motion/RevealFrame";
 import { Rise } from "@/components/motion/Reveal";
 
 /**
- * Featured project "plate": the dominant unit of the portfolio.
- * Visual first (full width), then a two-column caption: title ↔ summary/outcome.
- * The visual and title are shared elements that morph into the case-study hero.
+ * Featured project plate — 12-column side-by-side architecture:
+ * - Left column (5 cols): Index, Title, Description, and structured Case Metadata (Client/Role/Timeline/Year, Stack, Outcome).
+ * - Right column (7 cols): Large visual container.
+ * Both Title and Visual are shared ViewTransition elements that morph into the Case Study page.
  */
 export function ProjectPlate({ project, total }: { project: Project; total: number }) {
   return (
-    <article className="plate">
+    <article className="plate border-t border-[var(--line)] pt-12 md:pt-16">
       <Link
         href={`/work/${project.slug}`}
         transitionTypes={["nav-forward"]}
         data-cursor="View case"
-        className="block"
+        className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch"
         aria-label={`${project.title} — read case study`}
       >
-        {/* Meta rail */}
-        <Rise className="flex items-baseline justify-between gap-6 pb-5 font-mono text-xs text-[var(--ink-3)]">
-          <span className="flex items-baseline gap-4">
-            <span className="text-[var(--ink)] tabular-nums">
-              {project.index}
-              <span className="text-[var(--ink-3)]">/{String(total).padStart(2, "0")}</span>
-            </span>
-            <span className="plate-meta">{project.pillar}</span>
-          </span>
-          <span className="plate-meta">
-            {project.client} — {project.year}
-          </span>
-        </Rise>
+        {/* ——— Left Column: Title, Description & Case Metadata ——— */}
+        <Rise className="lg:col-span-5 flex flex-col justify-between space-y-8">
+          {/* Top block: Index + Title + Description */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3 font-mono text-xs text-[var(--ink-3)]">
+              <span className="text-[var(--signal)] font-medium tabular-nums">
+                {project.index}
+                <span className="text-[var(--ink-3)]">/{String(total).padStart(2, "0")}</span>
+              </span>
+              <span>·</span>
+              <span className="plate-meta">{project.pillar}</span>
+            </div>
 
-        {/* Visual — shared element */}
-        <ViewTransition name={`visual-${project.slug}`} share="morph" default="none">
-          <div>
-            <RevealFrame>
-              <BlueprintDiagram type={project.diagramType} specCode={project.specCode} size="lg" />
-            </RevealFrame>
-          </div>
-        </ViewTransition>
-
-        {/* Caption */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-6 pt-10 md:pt-12">
-          <div className="lg:col-span-6">
             <ViewTransition name={`title-${project.slug}`} share="morph" default="none">
-              <h3 className="text-[clamp(32px,4.2vw,60px)] font-semibold leading-[1.02] tracking-[-0.035em]">
+              <h3 className="text-[clamp(28px,3.2vw,46px)] font-semibold leading-[1.04] tracking-[-0.035em]">
                 <span className="plate-title">{project.title}</span>
               </h3>
             </ViewTransition>
+
+            <p className="text-base md:text-lg leading-relaxed text-[var(--ink-2)]">
+              {project.subtitle}
+            </p>
           </div>
 
-          <Rise className="lg:col-span-5 lg:col-start-8 space-y-6">
-            <p className="text-lg leading-relaxed text-[var(--ink-2)]">{project.subtitle}</p>
-
-            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 pt-6 border-t border-[var(--line)] text-sm">
+          {/* Bottom block: Structured Metadata (matching Case Study sidebar) */}
+          <div className="space-y-5 pt-6 border-t border-[var(--line)]">
+            <dl className="grid grid-cols-2 gap-y-4 gap-x-6 text-sm">
+              <div>
+                <dt className="font-mono text-[11px] text-[var(--ink-3)]">Client</dt>
+                <dd className="font-medium mt-0.5">{project.client}</dd>
+              </div>
               <div>
                 <dt className="font-mono text-[11px] text-[var(--ink-3)]">Role</dt>
-                <dd className="mt-1 font-medium">{project.role}</dd>
+                <dd className="font-medium mt-0.5">{project.role}</dd>
               </div>
               <div>
                 <dt className="font-mono text-[11px] text-[var(--ink-3)]">Timeline</dt>
-                <dd className="mt-1 font-medium">{project.timeline}</dd>
+                <dd className="font-medium mt-0.5">{project.timeline}</dd>
               </div>
-              <div className="sm:col-span-2">
-                <dt className="font-mono text-[11px] text-[var(--ink-3)]">Outcome</dt>
-                <dd className="mt-1 font-medium leading-relaxed">{project.headlineResult}</dd>
+              <div>
+                <dt className="font-mono text-[11px] text-[var(--ink-3)]">Year</dt>
+                <dd className="font-medium mt-0.5">{project.year}</dd>
               </div>
             </dl>
 
-            <span className="inline-flex items-center gap-2 text-sm font-medium">
-              <span className="link-underline">Read case study</span>
-              <span className="plate-arrow font-mono">→</span>
-            </span>
-          </Rise>
+            <div className="pt-4 border-t border-[var(--line)] space-y-2">
+              <div className="font-mono text-[11px] text-[var(--ink-3)]">Methods &amp; Stack</div>
+              <div className="flex flex-wrap gap-1.5">
+                {project.tools.map((t) => (
+                  <span
+                    key={t}
+                    className="font-mono text-[11px] text-[var(--ink-2)] px-2.5 py-0.5 rounded-[2px] bg-[var(--bg-2)]"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="pt-4 border-t border-[var(--line)] space-y-3">
+              <div>
+                <div className="font-mono text-[11px] text-[var(--ink-3)]">Outcome</div>
+                <p className="text-sm font-medium mt-0.5 leading-relaxed">
+                  {project.headlineResult}
+                </p>
+              </div>
+
+              <span className="inline-flex items-center gap-2 text-sm font-medium pt-1">
+                <span className="link-underline">Read case study</span>
+                <span className="plate-arrow font-mono">→</span>
+              </span>
+            </div>
+          </div>
+        </Rise>
+
+        {/* ——— Right Column: Visual Content Container ——— */}
+        <div className="lg:col-span-7 flex">
+          <ViewTransition name={`visual-${project.slug}`} share="morph" default="none">
+            <div className="w-full h-full">
+              <RevealFrame className="h-full">
+                <BlueprintDiagram
+                  type={project.diagramType}
+                  specCode={project.specCode}
+                  size="lg"
+                />
+              </RevealFrame>
+            </div>
+          </ViewTransition>
         </div>
       </Link>
     </article>

@@ -31,7 +31,7 @@ export default function WorkIndexPage() {
           </Rise>
         </header>
 
-        <div className="space-y-28 md:space-y-44">
+        <div className="space-y-20 md:space-y-28">
           {projects.map((p) => (
             <ProjectPlate key={p.slug} project={p} total={projects.length} />
           ))}

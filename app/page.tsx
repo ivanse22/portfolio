@@ -103,7 +103,7 @@ export default function Home() {
           </header>
 
           {/* Plates — generous rhythm, one idea per screen */}
-          <div className="space-y-28 md:space-y-44">
+          <div className="space-y-20 md:space-y-28">
             {featured.map((project) => (
               <ProjectPlate key={project.slug} project={project} total={featured.length} />
             ))}
