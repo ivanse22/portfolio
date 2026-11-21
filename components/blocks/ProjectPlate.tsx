@@ -17,7 +17,7 @@ export function ProjectPlate({ project, total }: { project: Project; total: numb
         href={`/work/${project.slug}`}
         transitionTypes={["nav-forward"]}
         data-cursor="View case"
-        className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-stretch"
+        className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start"
         aria-label={`${project.title} — read case study`}
       >
         {/* ——— Left Column: Title, Description & Case Metadata ——— */}
@@ -93,10 +93,10 @@ export function ProjectPlate({ project, total }: { project: Project; total: numb
           </div>
         </Rise>
 
-        {/* ——— Right Column: Visual Content Container ——— */}
-        <div className="lg:col-span-7 flex">
-          <div className="w-full h-full">
-            <RevealFrame className="h-full">
+        {/* ——— Right Column: Visual Content Container (Fixed 16:10 aspect ratio, zero responsive crop) ——— */}
+        <div className="lg:col-span-7">
+          <div className="w-full aspect-[16/10]">
+            <RevealFrame className="w-full h-full">
               <BlueprintDiagram
                 type={project.diagramType}
                 specCode={project.specCode}

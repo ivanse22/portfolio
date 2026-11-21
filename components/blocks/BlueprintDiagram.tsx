@@ -18,8 +18,8 @@ export function BlueprintDiagram({
 
   return (
     <div
-      className={`relative w-full h-full rounded-[4px] bp-bg-subgrid bg-[var(--bg-2)]/60 border border-[var(--line)] flex flex-col justify-between overflow-hidden select-none ${
-        lg ? "min-h-[340px] md:min-h-[clamp(420px,40vw,600px)] p-6 md:p-10" : "min-h-[280px] p-6 md:p-8"
+      className={`relative w-full h-full aspect-[16/10] rounded-[4px] bp-bg-subgrid bg-[var(--bg-2)]/60 border border-[var(--line)] flex flex-col justify-between overflow-hidden select-none ${
+        lg ? "p-6 md:p-10" : "p-6 md:p-8"
       }`}
     >
       {/* Quiet corner label */}
