@@ -101,7 +101,32 @@ export const projects: Project[] = [
         alt: "Spread of CJ marketing pages and layout modules across viewports",
       },
     ],
-    problemBento: {},
+    problemBento: {
+      top: {
+        src: "/images/work/cj-design-system/bento-top.png",
+        width: 836,
+        height: 280,
+        alt: "Create Connections — CJ Design System marketing banner",
+      },
+      left: {
+        src: "/images/work/cj-design-system/bento-left.png",
+        width: 411,
+        height: 500,
+        alt: "Mobile responsive experience powered by the CJ Design System",
+      },
+      rightTop: {
+        src: "/images/work/cj-design-system/bento-right-top.jpg",
+        width: 1024,
+        height: 611,
+        alt: "Interactive spacing and token inspection",
+      },
+      rightBottomGif: {
+        src: "/images/work/cj-design-system/bento-right-bottom.png",
+        width: 409,
+        height: 242,
+        alt: "Desktop experience powered by the CJ Design System",
+      },
+    },
     steps: [
       {
         index: "01",

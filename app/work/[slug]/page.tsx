@@ -232,6 +232,7 @@ export default async function CaseStudyPage({
                                 width={project.problemBento.rightTop.width}
                                 height={project.problemBento.rightTop.height}
                                 alt={project.problemBento.rightTop.alt}
+                                unoptimized
                                 className="w-full h-full object-cover"
                                 sizes="(max-width: 640px) 100vw, 410px"
                               />
