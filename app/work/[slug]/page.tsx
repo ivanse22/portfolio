@@ -167,7 +167,112 @@ export default async function CaseStudyPage({
 
               {project.problemImages && project.problemImages.length > 0 && (
                 <div className="space-y-6 pt-4">
-                  {project.problemImages.map((img) => (
+                  {/* problem-01 */}
+                  <div className="w-full rounded-[4px] border border-[var(--line)] overflow-hidden bg-[var(--bg-2)]">
+                    <Image
+                      src={project.problemImages[0].src}
+                      width={project.problemImages[0].width}
+                      height={project.problemImages[0].height}
+                      alt={project.problemImages[0].alt}
+                      className="w-full h-auto block"
+                      sizes="(max-width: 1024px) 100vw, 836px"
+                    />
+                  </div>
+
+                  {/* Problem Bento Grid (right below problem-01) */}
+                  {project.problemBento && (
+                    <div className="grid gap-4">
+                      {/* Top wide slot */}
+                      <div className="w-full aspect-[836/280] rounded-[4px] border border-[var(--line)] overflow-hidden bg-[var(--bg-2)] flex flex-col items-center justify-center text-center">
+                        {project.problemBento.top ? (
+                          <Image
+                            src={project.problemBento.top.src}
+                            width={project.problemBento.top.width}
+                            height={project.problemBento.top.height}
+                            alt={project.problemBento.top.alt}
+                            className="w-full h-full object-cover"
+                            sizes="(max-width: 1024px) 100vw, 836px"
+                          />
+                        ) : (
+                          <div className="px-4 space-y-1 font-mono">
+                            <div className="text-xs text-[var(--ink-2)]">BENTO / TOP WIDE</div>
+                            <div className="text-[11px] text-[var(--ink-3)]">836 × 280 · Placeholder</div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Bottom 2-column split */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {/* Left tall slot */}
+                        <div className="w-full aspect-[410/500] rounded-[4px] border border-[var(--line)] overflow-hidden bg-[var(--bg-2)] flex flex-col items-center justify-center text-center">
+                          {project.problemBento.left ? (
+                            <Image
+                              src={project.problemBento.left.src}
+                              width={project.problemBento.left.width}
+                              height={project.problemBento.left.height}
+                              alt={project.problemBento.left.alt}
+                              className="w-full h-full object-cover"
+                              sizes="(max-width: 640px) 100vw, 410px"
+                            />
+                          ) : (
+                            <div className="px-4 space-y-1 font-mono">
+                              <div className="text-xs text-[var(--ink-2)]">BENTO / LEFT TALL</div>
+                              <div className="text-[11px] text-[var(--ink-3)]">410 × 500 · Placeholder</div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Right 2-row stack */}
+                        <div className="grid grid-rows-2 gap-4">
+                          {/* Right top */}
+                          <div className="w-full aspect-[410/242] rounded-[4px] border border-[var(--line)] overflow-hidden bg-[var(--bg-2)] flex flex-col items-center justify-center text-center">
+                            {project.problemBento.rightTop ? (
+                              <Image
+                                src={project.problemBento.rightTop.src}
+                                width={project.problemBento.rightTop.width}
+                                height={project.problemBento.rightTop.height}
+                                alt={project.problemBento.rightTop.alt}
+                                className="w-full h-full object-cover"
+                                sizes="(max-width: 640px) 100vw, 410px"
+                              />
+                            ) : (
+                              <div className="px-4 space-y-1 font-mono">
+                                <div className="text-xs text-[var(--ink-2)]">BENTO / RIGHT TOP</div>
+                                <div className="text-[11px] text-[var(--ink-3)]">410 × 242 · Placeholder</div>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Right bottom (GIF-ready) */}
+                          <div className="w-full aspect-[410/242] rounded-[4px] border border-[var(--line)] overflow-hidden bg-[var(--bg-2)] flex flex-col items-center justify-center text-center">
+                            {project.problemBento.rightBottomGif ? (
+                              <Image
+                                src={project.problemBento.rightBottomGif.src}
+                                width={project.problemBento.rightBottomGif.width}
+                                height={project.problemBento.rightBottomGif.height}
+                                alt={project.problemBento.rightBottomGif.alt}
+                                unoptimized
+                                className="w-full h-full object-cover"
+                                sizes="(max-width: 640px) 100vw, 410px"
+                              />
+                            ) : (
+                              <div className="px-4 space-y-1 font-mono">
+                                <div className="text-xs text-[var(--signal)]">
+                                  BENTO / RIGHT BOTTOM (GIF)
+                                </div>
+                                <div className="text-[11px] text-[var(--ink-3)]">
+                                  410 × 242 · GIF / Image Placeholder
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Remaining problem images (e.g. problem-02) */}
+                  {project.problemImages.slice(1).map((img) => (
                     <div
                       key={img.src}
                       className="w-full rounded-[4px] border border-[var(--line)] overflow-hidden bg-[var(--bg-2)]"

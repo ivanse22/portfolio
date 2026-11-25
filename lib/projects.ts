@@ -47,6 +47,12 @@ export type Project = {
   problem: string;
   context: string;
   problemImages?: CaseImage[];
+  problemBento?: {
+    top?: CaseImage;
+    left?: CaseImage;
+    rightTop?: CaseImage;
+    rightBottomGif?: CaseImage;
+  };
   steps: CaseStep[];
   decisions: CaseDecision[];
   decisionImages?: CaseImage[];
@@ -95,6 +101,7 @@ export const projects: Project[] = [
         alt: "Spread of CJ marketing pages and layout modules across viewports",
       },
     ],
+    problemBento: {},
     steps: [
       {
         index: "01",
