@@ -115,7 +115,7 @@ export const projects: Project[] = [
         alt: "Mobile responsive experience powered by the CJ Design System",
       },
       rightTop: {
-        src: "/images/work/cj-design-system/bento-right-top.jpg",
+        src: "/images/work/cj-design-system/bento-right-top.gif",
         width: 1024,
         height: 611,
         alt: "Interactive spacing and token inspection",
