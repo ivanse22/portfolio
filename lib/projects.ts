@@ -1,3 +1,10 @@
+export type CaseImage = {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+};
+
 export type CaseDecision = {
   id: string;
   title: string;
@@ -11,6 +18,7 @@ export type CaseStep = {
   title: string;
   summary: string;
   specNote: string;
+  images?: CaseImage[];
 };
 
 export type CaseMetric = {
@@ -35,10 +43,13 @@ export type Project = {
   headlineResult: string;
   specCode: string;
   tint: string;
+  heroImage?: CaseImage;
   problem: string;
   context: string;
+  problemImages?: CaseImage[];
   steps: CaseStep[];
   decisions: CaseDecision[];
+  decisionImages?: CaseImage[];
   metrics: CaseMetric[];
   diagramType: "tokens" | "ia-tree" | "fintech-flow" | "megamenu" | "event-brand";
 };
@@ -60,10 +71,30 @@ export const projects: Project[] = [
     headlineResult: "1:1 parity between Figma tokens and live HubSpot production modules",
     specCode: "SYS-CJ-01 // ATOMIC-TOKENS",
     tint: "#E4E9F5",
+    heroImage: {
+      src: "/images/work/cj-design-system/hero.png",
+      width: 1280,
+      height: 800,
+      alt: "CJ Design System & UI Kit — Component library, tokens, and documentation overview",
+    },
     problem:
       "While Creative Strategy defined the brand soul, engineering and marketing teams struggled with fragmented UI across HubSpot CRM templates and custom front-end frameworks. Shipping a single landing page meant manual QA loops and visual drift.",
     context:
       "The challenge wasn't aesthetic—it was operational. We needed a system that spoke Brand fluently while behaving like Code under strict CRM constraints.",
+    problemImages: [
+      {
+        src: "/images/work/cj-design-system/problem-01.png",
+        width: 836,
+        height: 567,
+        alt: "Audit of legacy CJ interface components, cards, and color ramps",
+      },
+      {
+        src: "/images/work/cj-design-system/problem-02.png",
+        width: 836,
+        height: 267,
+        alt: "Spread of CJ marketing pages and layout modules across viewports",
+      },
+    ],
     steps: [
       {
         index: "01",
@@ -72,6 +103,20 @@ export const projects: Project[] = [
         summary:
           "Replaced ad-hoc page mockups with a strict token foundation: semantic color ramps, fluid typographic scales, and an 8-pt spatial grid translated into reusable logic.",
         specNote: "TOKENS: 48 COLOR / 9 TYPE / 11 SPACE",
+        images: [
+          {
+            src: "/images/work/cj-design-system/step-01a.png",
+            width: 836,
+            height: 523,
+            alt: "01. Button component spacing, padding tokens, and typography specifications",
+          },
+          {
+            src: "/images/work/cj-design-system/step-01b.png",
+            width: 836,
+            height: 523,
+            alt: "02. Cards component structure and editorial content layout",
+          },
+        ],
       },
       {
         index: "02",
@@ -80,6 +125,14 @@ export const projects: Project[] = [
         summary:
           "Engineered multi-state Figma components with nested auto-layout, slot patterns, and strict property matrices so marketing could assemble pages without breaking brand rules.",
         specNote: "64 CORE COMPONENTS · 240+ VARIANTS",
+        images: [
+          {
+            src: "/images/work/cj-design-system/step-02.png",
+            width: 836,
+            height: 523,
+            alt: "03. Cards anatomical redline specification with 18 numbered token callouts",
+          },
+        ],
       },
       {
         index: "03",
@@ -88,6 +141,14 @@ export const projects: Project[] = [
         summary:
           "Mapped every Figma property directly to HubSpot module fields and DOM constraints—achieving 1:1 visual and structural parity with production.",
         specNote: "FIGMA PROP ↔ HUBSPOT FIELD 1:1",
+        images: [
+          {
+            src: "/images/work/cj-design-system/step-03.png",
+            width: 836,
+            height: 523,
+            alt: "04. CRM HubSpot module mapping alongside desktop browser preview",
+          },
+        ],
       },
       {
         index: "04",
@@ -96,6 +157,20 @@ export const projects: Project[] = [
         summary:
           "Delivered an annotated specification library with usage rules, spacing redlines, and interaction states—enabling autonomous shipping across teams.",
         specNote: "DOC COVERAGE: 100% CORE MODULES",
+        images: [
+          {
+            src: "/images/work/cj-design-system/step-04a.png",
+            width: 836,
+            height: 523,
+            alt: "Responsive desktop and mobile views powered by the CJ Design System",
+          },
+          {
+            src: "/images/work/cj-design-system/step-04b.png",
+            width: 836,
+            height: 523,
+            alt: "Component documentation sheet with numbered anatomy guidelines",
+          },
+        ],
       },
     ],
     decisions: [
@@ -116,6 +191,20 @@ export const projects: Project[] = [
         title: "Embedded redlines inside component docs",
         rationale: "External PDF guidelines go stale the week they are published.",
         outcome: "Living specs inside Figma kept designers and engineers on the exact same version.",
+      },
+    ],
+    decisionImages: [
+      {
+        src: "/images/work/cj-design-system/decisions-01.png",
+        width: 836,
+        height: 523,
+        alt: "Button variants, color themes, and embedded redline documentation",
+      },
+      {
+        src: "/images/work/cj-design-system/decisions-02.png",
+        width: 836,
+        height: 800,
+        alt: "System documentation grid: navigation bar, hero banners, and semantic color ramps",
       },
     ],
     metrics: [

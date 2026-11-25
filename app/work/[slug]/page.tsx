@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Page } from "@/components/layout/Page";
@@ -67,13 +68,27 @@ export default async function CaseStudyPage({
             </p>
           </div>
 
-          {/* Hero Visual */}
+          {/* Hero Visual (16:10) */}
           <div className="mt-12">
-            <BlueprintDiagram
-              type={project.diagramType}
-              specCode={project.specCode}
-              size="lg"
-            />
+            {project.heroImage ? (
+              <div className="w-full aspect-[16/10] rounded-[4px] border border-[var(--line)] overflow-hidden bg-[var(--bg-2)]">
+                <Image
+                  src={project.heroImage.src}
+                  width={project.heroImage.width}
+                  height={project.heroImage.height}
+                  alt={project.heroImage.alt}
+                  priority
+                  className="w-full h-full object-cover"
+                  sizes="(max-width: 1440px) 100vw, 1360px"
+                />
+              </div>
+            ) : (
+              <BlueprintDiagram
+                type={project.diagramType}
+                specCode={project.specCode}
+                size="lg"
+              />
+            )}
           </div>
         </div>
       </header>
@@ -138,7 +153,7 @@ export default async function CaseStudyPage({
 
           {/* Main Narrative */}
           <div className="lg:col-span-8 space-y-20">
-            {/* 01. Problem & Context */}
+            {/* 01. Problem & Context (+ optional Problem Storytelling Images) */}
             <Rise className="space-y-6 pb-16 border-b border-[var(--line)]">
               <span id="problem" className="scroll-mt-24 font-mono text-xs text-[var(--signal)] block">
                 01 / Problem &amp; Context
@@ -149,36 +164,78 @@ export default async function CaseStudyPage({
               <p className="text-base md:text-lg text-[var(--ink-2)] leading-relaxed">
                 {project.context}
               </p>
+
+              {project.problemImages && project.problemImages.length > 0 && (
+                <div className="space-y-6 pt-4">
+                  {project.problemImages.map((img) => (
+                    <div
+                      key={img.src}
+                      className="w-full rounded-[4px] border border-[var(--line)] overflow-hidden bg-[var(--bg-2)]"
+                    >
+                      <Image
+                        src={img.src}
+                        width={img.width}
+                        height={img.height}
+                        alt={img.alt}
+                        className="w-full h-auto block"
+                        sizes="(max-width: 1024px) 100vw, 836px"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </Rise>
 
-            {/* 02. Process Steps */}
+            {/* 02. Process Steps (+ per-step Storytelling Images) */}
             <section id="process" className="scroll-mt-24 space-y-10 pb-16 border-b border-[var(--line)]">
               <span className="font-mono text-xs text-[var(--signal)] block">
                 02 / Process &amp; Execution
               </span>
               <div className="divide-y divide-[var(--line)] border-y border-[var(--line)]">
                 {project.steps.map((step) => (
-                  <Rise key={step.index} className="py-8 grid grid-cols-1 md:grid-cols-12 gap-4">
-                    <div className="md:col-span-4 space-y-1">
-                      <span className="font-mono text-xs text-[var(--ink-3)]">
-                        {step.index} · {step.phase}
-                      </span>
-                      <h3 className="text-lg font-semibold tracking-tight">{step.title}</h3>
+                  <Rise key={step.index} className="py-8 space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+                      <div className="md:col-span-4 space-y-1">
+                        <span className="font-mono text-xs text-[var(--ink-3)]">
+                          {step.index} · {step.phase}
+                        </span>
+                        <h3 className="text-lg font-semibold tracking-tight">{step.title}</h3>
+                      </div>
+                      <div className="md:col-span-8 space-y-2">
+                        <p className="text-sm md:text-base text-[var(--ink-2)] leading-relaxed">
+                          {step.summary}
+                        </p>
+                        <span className="inline-block font-mono text-[11px] text-[var(--ink-3)]">
+                          {step.specNote}
+                        </span>
+                      </div>
                     </div>
-                    <div className="md:col-span-8 space-y-2">
-                      <p className="text-sm md:text-base text-[var(--ink-2)] leading-relaxed">
-                        {step.summary}
-                      </p>
-                      <span className="inline-block font-mono text-[11px] text-[var(--ink-3)]">
-                        {step.specNote}
-                      </span>
-                    </div>
+
+                    {step.images && step.images.length > 0 && (
+                      <div className="space-y-6">
+                        {step.images.map((img) => (
+                          <div
+                            key={img.src}
+                            className="w-full rounded-[4px] border border-[var(--line)] overflow-hidden bg-[var(--bg-2)]"
+                          >
+                            <Image
+                              src={img.src}
+                              width={img.width}
+                              height={img.height}
+                              alt={img.alt}
+                              className="w-full h-auto block"
+                              sizes="(max-width: 1024px) 100vw, 836px"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </Rise>
                 ))}
               </div>
             </section>
 
-            {/* 03. Decision Log */}
+            {/* 03. Decision Log (+ optional Decision Storytelling Images) */}
             <section id="decisions" className="scroll-mt-24 space-y-8 pb-16 border-b border-[var(--line)]">
               <span className="font-mono text-xs text-[var(--signal)] block">
                 03 / Key Design Decisions
@@ -200,6 +257,26 @@ export default async function CaseStudyPage({
                   </Rise>
                 ))}
               </div>
+
+              {project.decisionImages && project.decisionImages.length > 0 && (
+                <div className="space-y-6 pt-2">
+                  {project.decisionImages.map((img) => (
+                    <Rise
+                      key={img.src}
+                      className="w-full rounded-[4px] border border-[var(--line)] overflow-hidden bg-[var(--bg-2)]"
+                    >
+                      <Image
+                        src={img.src}
+                        width={img.width}
+                        height={img.height}
+                        alt={img.alt}
+                        className="w-full h-auto block"
+                        sizes="(max-width: 1024px) 100vw, 836px"
+                      />
+                    </Rise>
+                  ))}
+                </div>
+              )}
             </section>
 
             {/* 04. Outcomes & Metrics */}

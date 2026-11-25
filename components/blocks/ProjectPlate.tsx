@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Project } from "@/lib/projects";
 import { BlueprintDiagram } from "@/components/blocks/BlueprintDiagram";
@@ -97,11 +98,24 @@ export function ProjectPlate({ project, total }: { project: Project; total: numb
         <div className="lg:col-span-7">
           <div className="w-full aspect-[16/10]">
             <RevealFrame className="w-full h-full">
-              <BlueprintDiagram
-                type={project.diagramType}
-                specCode={project.specCode}
-                size="lg"
-              />
+              {project.heroImage ? (
+                <div className="relative w-full h-full rounded-[4px] border border-[var(--line)] overflow-hidden bg-[var(--bg-2)]">
+                  <Image
+                    src={project.heroImage.src}
+                    width={project.heroImage.width}
+                    height={project.heroImage.height}
+                    alt={project.heroImage.alt}
+                    className="diagram-artifact w-full h-full object-cover"
+                    sizes="(max-width: 1024px) 100vw, 58vw"
+                  />
+                </div>
+              ) : (
+                <BlueprintDiagram
+                  type={project.diagramType}
+                  specCode={project.specCode}
+                  size="lg"
+                />
+              )}
             </RevealFrame>
           </div>
         </div>
