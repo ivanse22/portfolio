@@ -65,9 +65,11 @@ export default function CVDossierPage() {
           <Link
             href="/"
             transitionTypes={["nav-back"]}
-            className="inline-flex items-center gap-2 font-mono text-xs text-[var(--ink-2)] hover:text-[var(--ink)]"
+            className="group inline-flex items-center gap-2 py-1 font-mono text-xs text-[var(--ink-2)] hover:text-[var(--ink)] transition-colors"
           >
-            <span>←</span>
+            <span className="inline-block transition-transform duration-150 group-hover:-translate-x-[3px]">
+              ←
+            </span>
             <span className="link-underline">Back to portfolio</span>
           </Link>
           <div className="flex flex-wrap items-center gap-3">
@@ -77,7 +79,7 @@ export default function CVDossierPage() {
               className="bp-btn bp-btn--primary"
             >
               <span>Download Original PDF</span>
-              <span className="bp-btn__icon">↓</span>
+              <span className="bp-btn__icon bp-btn__icon--down">↓</span>
             </a>
             <button
               type="button"
@@ -108,7 +110,7 @@ export default function CVDossierPage() {
               <div>Bogotá, Colombia · Open to remote roles</div>
               <div>LATAM-based · Full overlap with EST</div>
               <div>
-                <a href="mailto:ivan.se22@gmail.com" className="text-[var(--ink)] underline">
+                <a href="mailto:ivan.se22@gmail.com" className="text-[var(--ink)] link-underline">
                   ivan.se22@gmail.com
                 </a>
               </div>
@@ -117,7 +119,7 @@ export default function CVDossierPage() {
                   href="https://www.linkedin.com/in/ivansierrae/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[var(--signal)]"
+                  className="hover:text-[var(--ink)] link-underline"
                 >
                   linkedin.com/in/ivansierrae
                 </a>

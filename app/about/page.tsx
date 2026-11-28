@@ -159,17 +159,22 @@ export default function AboutPage() {
         {/* ——— Hero ——— */}
         <header className="pb-14 border-b border-[var(--line)] grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
           <div className="lg:col-span-8 space-y-4">
-            <p className="font-mono text-xs text-[var(--signal)]">
-              About · UI/UX, Interaction &amp; Experience Designer
-            </p>
+            <Rise delay={0}>
+              <p className="font-mono text-xs text-[var(--signal)]">
+                About · UI/UX, Interaction &amp; Experience Designer
+              </p>
+            </Rise>
             <h1 className="text-[clamp(40px,6vw,88px)] font-semibold tracking-[-0.04em] leading-[0.94]">
-              <Reveal>Designing scalable</Reveal>
-              <Reveal delay={0.06}>
+              <Reveal delay={0}>Designing scalable</Reveal>
+              <Reveal delay={0.08}>
                 products &amp; <span className="voice-serif font-normal">considered</span> systems.
               </Reveal>
             </h1>
           </div>
-          <Rise className="lg:col-span-4 border-t border-[var(--line)] pt-5 text-sm space-y-1.5 text-[var(--ink-2)]">
+          <Rise
+            delay={0.16}
+            className="lg:col-span-4 border-t border-[var(--line)] pt-5 text-sm space-y-1.5 text-[var(--ink-2)]"
+          >
             <div className="font-medium text-[var(--ink)]">Ivan Sierra</div>
             <div>UI/UX · Interaction &amp; Experience Designer</div>
             <div>Bogotá, Colombia · Full overlap with EST</div>
@@ -180,22 +185,22 @@ export default function AboutPage() {
           </Rise>
         </header>
 
-        {/* ——— Profile Narrative + Philosophy ——— */}
+        {/* ——— Profile Narrative + Philosophy (standing solid at rest) ——— */}
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <Rise className="lg:col-span-5 space-y-4">
-            <span className="font-mono text-xs text-[var(--ink-3)]">Profile</span>
+          <div className="lg:col-span-5 space-y-4">
+            <span className="font-mono text-xs text-[var(--ink-3)] block">Profile</span>
             <blockquote className="voice-serif text-3xl md:text-4xl leading-[1.15] text-[var(--ink)]">
               “Translating complex business and technical requirements into intuitive,
               accessible, and high-performing interfaces.”
             </blockquote>
-          </Rise>
+          </div>
 
-          <Rise
-            delay={0.08}
-            className="lg:col-span-7 space-y-5 text-base md:text-lg text-[var(--ink-2)] leading-relaxed"
-          >
+          <div className="lg:col-span-7 space-y-5 text-base md:text-lg text-[var(--ink-2)] leading-relaxed">
             <p>
-              I am a <strong className="text-[var(--ink)] font-medium">Senior UI/UX, Interaction and Experience Designer</strong>{" "}
+              I am a{" "}
+              <strong className="text-[var(--ink)] font-medium">
+                Senior UI/UX, Interaction and Experience Designer
+              </strong>{" "}
               combining strong visual design foundations with advanced UX and interaction
               design methodologies. I have a proven background designing{" "}
               <strong className="text-[var(--ink)] font-medium">
@@ -215,7 +220,7 @@ export default function AboutPage() {
               </strong>
               .
             </p>
-          </Rise>
+          </div>
         </section>
 
         {/* ——— Experience Timeline ——— */}
@@ -234,7 +239,7 @@ export default function AboutPage() {
                 className="bp-btn bp-btn--primary"
               >
                 <span>Download CV (PDF)</span>
-                <span className="bp-btn__icon">↓</span>
+                <span className="bp-btn__icon bp-btn__icon--down">↓</span>
               </a>
               <Link href="/cv" className="bp-btn bp-btn--ghost">
                 <span>Web CV View</span>
@@ -249,7 +254,7 @@ export default function AboutPage() {
                 key={`${item.org}-${item.period}`}
                 className="py-10 grid grid-cols-1 md:grid-cols-12 gap-6 items-start"
               >
-                <div className="md:col-span-3 font-mono text-xs text-[var(--ink-3)] pt-1">
+                <div className="md:col-span-3 font-mono text-xs tabular-nums text-[var(--ink-3)] pt-1">
                   {item.period}
                 </div>
                 <div className="md:col-span-3">
@@ -257,7 +262,7 @@ export default function AboutPage() {
                   <p className="font-mono text-xs text-[var(--ink-2)] mt-1">
                     {item.org}
                   </p>
-                  <p className="font-mono text-[11px] text-[var(--ink-3)] mt-0.5">
+                  <p className="font-mono text-xs text-[var(--ink-3)] mt-0.5">
                     {item.location}
                   </p>
                 </div>
@@ -296,7 +301,7 @@ export default function AboutPage() {
                   <div key={ed.title} className="py-5 first:pt-0 space-y-1.5">
                     <div className="flex items-baseline justify-between gap-4">
                       <h3 className="text-lg font-semibold tracking-tight">{ed.title}</h3>
-                      <span className="font-mono text-xs text-[var(--signal)] shrink-0">
+                      <span className="font-mono text-xs tabular-nums text-[var(--signal)] shrink-0">
                         {ed.year}
                       </span>
                     </div>
@@ -319,7 +324,7 @@ export default function AboutPage() {
                   <div key={cert.title} className="py-5 first:pt-0 space-y-1.5">
                     <div className="flex items-baseline justify-between gap-4">
                       <h3 className="text-lg font-semibold tracking-tight">{cert.title}</h3>
-                      <span className="font-mono text-xs text-[var(--ink-3)] shrink-0">
+                      <span className="font-mono text-xs tabular-nums text-[var(--ink-3)] shrink-0">
                         {cert.year}
                       </span>
                     </div>
@@ -346,20 +351,16 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {stackColumns.map((col, idx) => (
-              <Rise
-                key={col.code}
-                delay={idx * 0.05}
-                className="border-t border-[var(--line)] pt-5 space-y-4"
-              >
-                <div className="font-mono text-xs text-[var(--ink-3)]">{col.code}</div>
+            {stackColumns.map((col) => (
+              <div key={col.code} className="border-t border-[var(--line)] pt-5 space-y-4">
+                <div className="font-mono text-xs tabular-nums text-[var(--ink-3)]">{col.code}</div>
                 <h3 className="text-base font-semibold tracking-tight">{col.title}</h3>
                 <ul className="space-y-2 text-sm text-[var(--ink-2)]">
                   {col.items.map((item) => (
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
-              </Rise>
+              </div>
             ))}
           </div>
         </section>

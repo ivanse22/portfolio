@@ -10,7 +10,7 @@ export function BlueprintFooter() {
     try {
       await navigator.clipboard.writeText("ivan.se22@gmail.com");
       setCopied(true);
-      setTimeout(() => setCopied(false), 2400);
+      setTimeout(() => setCopied(false), 2000);
     } catch {
       window.location.href = "mailto:ivan.se22@gmail.com";
     }
@@ -52,22 +52,22 @@ export function BlueprintFooter() {
               <div className="font-mono text-xs text-[var(--ink-3)]">Navigation</div>
               <ul className="space-y-2.5 text-[var(--ink-2)]">
                 <li>
-                  <Link href="/" className="hover:text-[var(--ink)] transition-colors">
+                  <Link href="/" className="footer-link inline-block py-0.5">
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link href="/work" className="hover:text-[var(--ink)] transition-colors">
+                  <Link href="/work" className="footer-link inline-block py-0.5">
                     Selected Work
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" className="hover:text-[var(--ink)] transition-colors">
+                  <Link href="/about" className="footer-link inline-block py-0.5">
                     About &amp; Experience
                   </Link>
                 </li>
                 <li>
-                  <Link href="/cv" className="hover:text-[var(--ink)] transition-colors">
+                  <Link href="/cv" className="footer-link inline-block py-0.5">
                     Printable CV
                   </Link>
                 </li>
@@ -82,7 +82,7 @@ export function BlueprintFooter() {
                     href="https://www.linkedin.com/in/ivansierrae/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-[var(--ink)] transition-colors"
+                    className="footer-link inline-block py-0.5"
                   >
                     LinkedIn ↗
                   </a>
@@ -92,7 +92,7 @@ export function BlueprintFooter() {
                     href="https://www.behance.net/ivan_sierra"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-[var(--ink)] transition-colors"
+                    className="footer-link inline-block py-0.5"
                   >
                     Behance ↗
                   </a>
@@ -100,7 +100,7 @@ export function BlueprintFooter() {
                 <li>
                   <a
                     href="mailto:ivan.se22@gmail.com"
-                    className="hover:text-[var(--ink)] transition-colors"
+                    className="footer-link inline-block py-0.5"
                   >
                     Email ↗
                   </a>

@@ -18,7 +18,7 @@ export function BlueprintDiagram({
 
   return (
     <div
-      className={`relative w-full h-full aspect-[16/10] rounded-[4px] bp-bg-subgrid bg-[var(--bg-2)]/60 border border-[var(--line)] flex flex-col justify-between overflow-hidden select-none ${
+      className={`plate-frame relative w-full h-full aspect-[16/10] rounded-[4px] bp-bg-subgrid bg-[var(--bg-2)]/60 border border-[var(--line)] flex flex-col justify-between overflow-hidden select-none ${
         lg ? "p-6 md:p-10" : "p-6 md:p-8"
       }`}
     >

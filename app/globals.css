@@ -45,12 +45,22 @@
   --bg-2: #e6e9e2;
   --surface: #ffffff;
   --ink: #111315;
-  --ink-2: #5a6065;
-  --ink-3: #878d92;
+  --ink-2: #52585d;
+  --ink-3: #63696e;
   --line: #dcdfd9;
   --signal: #e64212;
   --ok: #1f9d55;
   --pad-x: clamp(24px, 6vw, 80px);
+
+  /* design-taste-frontend motion tokens */
+  --m-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --m-ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
+  --m-in: 150ms;
+  --m-out: 120ms;
+  --m-press: 90ms;
+  --m-card-in: 180ms;
+  --m-image-in: 600ms;
+  --m-image-out: 400ms;
 }
 
 html[data-theme="dark"] {
@@ -59,8 +69,8 @@ html[data-theme="dark"] {
   --bg-2: #171b21;
   --surface: #181c22;
   --ink: #f2f4f0;
-  --ink-2: #949a9e;
-  --ink-3: #646a70;
+  --ink-2: #a0a6ab;
+  --ink-3: #8a9197;
   --line: #242931;
   --signal: #ff5c2e;
   --ok: #34c776;
@@ -78,17 +88,41 @@ html[data-theme="dark"] {
     color: var(--ink);
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv11";
-    transition: background-color 0.35s var(--ease-out-quint), color 0.35s var(--ease-out-quint);
+    transition: background-color 0.3s var(--m-ease-enter), color 0.3s var(--m-ease-enter);
     overflow-x: hidden;
   }
   ::selection {
     background: var(--ink);
     color: var(--bg);
   }
+  /* Instant 2px focus ring in action colour, 2px offset (no lag transition) */
   :focus-visible {
-    outline: 1.5px solid var(--signal);
-    outline-offset: 3px;
+    outline: 2px solid var(--signal);
+    outline-offset: 2px;
+    transition: none;
   }
+}
+
+/* Keyboard skip link — invisible until first Tab, never shifts header layout */
+.skip-link {
+  position: absolute;
+  left: var(--pad-x);
+  top: 12px;
+  z-index: 60;
+  padding: 10px 16px;
+  border-radius: 3px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 500;
+  transform: translateY(-160%);
+  opacity: 0;
+  pointer-events: none;
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* Subtle architectural grid — used with restraint */
@@ -113,11 +147,14 @@ html[data-theme="dark"] {
   letter-spacing: -0.02em;
 }
 
-/* Static position button — clean orange hover transition */
+/* ————————————————————————————————————————————————
+   Buttons — clear Primary vs. Secondary rank + tactile step/press
+   ———————————————————————————————————————————————— */
 .bp-btn {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 10px;
   height: 46px;
   padding: 0 22px;
   border: 1px solid var(--ink);
@@ -125,124 +162,241 @@ html[data-theme="dark"] {
   font-size: 14px;
   font-weight: 500;
   letter-spacing: -0.01em;
+  user-select: none;
   transition:
-    background-color 0.28s var(--ease-out-quint),
-    color 0.28s var(--ease-out-quint),
-    border-color 0.28s var(--ease-out-quint);
+    transform var(--m-out) var(--m-ease),
+    background-color var(--m-out) var(--m-ease),
+    color var(--m-out) var(--m-ease),
+    border-color var(--m-out) var(--m-ease);
+}
+.bp-btn--sm {
+  height: 40px;
+  padding: 0 16px;
+  gap: 8px;
+  font-size: 13px;
 }
 .bp-btn--primary {
   background: var(--ink);
   color: var(--bg);
-}
-.bp-btn--primary:hover {
-  background: var(--signal);
-  border-color: var(--signal);
-  color: #ffffff;
 }
 .bp-btn--ghost {
   background: transparent;
   color: var(--ink);
   border-color: var(--line);
 }
-.bp-btn--ghost:hover {
-  background: var(--signal);
-  border-color: var(--signal);
-  color: #ffffff;
-}
 .bp-btn__icon {
   display: inline-grid;
   place-items: center;
   font-family: var(--font-mono);
   font-size: 13px;
-  transition: transform 0.28s var(--ease-out-quint);
+  transition: transform var(--m-out) var(--m-ease);
 }
-.bp-btn:hover .bp-btn__icon {
-  transform: translateX(3px);
+
+@media (hover: hover) and (pointer: fine) {
+  .bp-btn:hover {
+    transform: translateY(-1px);
+    transition-duration: var(--m-in);
+  }
+  .bp-btn--primary:hover {
+    background: var(--signal);
+    border-color: var(--signal);
+    color: #ffffff;
+  }
+  /* Secondary stays secondary: faint tonal surface + crisp ink border */
+  .bp-btn--ghost:hover {
+    background: color-mix(in srgb, var(--ink) 5%, var(--surface));
+    border-color: var(--ink);
+    color: var(--ink);
+  }
+  .bp-btn:hover .bp-btn__icon {
+    transform: translateX(3px);
+    transition-duration: var(--m-in);
+  }
+  .bp-btn:hover .bp-btn__icon--down {
+    transform: translateY(2px);
+    transition-duration: var(--m-in);
+  }
+}
+
+.bp-btn:active {
+  transform: translateY(1px) scale(0.985);
+  transition-duration: var(--m-press);
+}
+
+/* Header utility pill buttons (Theme / Grid) */
+.hud-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 11px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  transition:
+    transform var(--m-out) var(--m-ease),
+    color var(--m-out) var(--m-ease),
+    border-color var(--m-out) var(--m-ease),
+    background-color var(--m-out) var(--m-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .hud-pill:hover {
+    transform: translateY(-1px);
+    transition-duration: var(--m-in);
+  }
+}
+.hud-pill:active {
+  transform: translateY(1px) scale(0.985);
+  transition-duration: var(--m-press);
 }
 
 /* ————————————————————————————————————————————————
-   Interaction primitives
+   Interaction primitives (150ms in / 120ms out)
    ———————————————————————————————————————————————— */
 
-/* Nav link — underline draws in from the left, leaves to the right */
-.nav-link {
+/* Nav & Footer bare links — 1px line draws left-to-right 4px under the word */
+.nav-link,
+.footer-link {
   position: relative;
+  transition: color var(--m-out) var(--m-ease);
 }
-.nav-link::after {
+.nav-link::after,
+.footer-link::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -2px;
+  bottom: -3px;
   height: 1px;
   background: currentColor;
   transform: scaleX(0);
   transform-origin: right;
-  transition: transform 0.45s var(--ease-out-expo);
+  transition: transform var(--m-out) var(--m-ease);
 }
-.nav-link:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
+.nav-link--bar::after {
+  bottom: 16px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover,
+  .footer-link:hover {
+    color: var(--ink);
+    transition-duration: var(--m-in);
+  }
+  .nav-link:hover::after,
+  .footer-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+    transition-duration: var(--m-in);
+  }
 }
 
-/* Inline text underline (works across wrapped lines) */
+/* Inline text action link — rests on a faint hairline, draws 1px ink line on hover */
 .link-underline {
-  background: linear-gradient(currentColor, currentColor) 0 100% / 0% 1px no-repeat;
+  background-image:
+    linear-gradient(currentColor, currentColor),
+    linear-gradient(color-mix(in srgb, currentColor 26%, transparent), color-mix(in srgb, currentColor 26%, transparent));
+  background-position: 0 100%, 0 100%;
+  background-size: 0% 1px, 100% 1px;
+  background-repeat: no-repeat;
+  padding-bottom: 2px;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-  transition: background-size 0.6s var(--ease-out-expo);
+  transition: background-size var(--m-out) var(--m-ease);
 }
-a:hover .link-underline,
-.link-underline:hover {
-  background-size: 100% 1px;
+@media (hover: hover) and (pointer: fine) {
+  a:hover .link-underline,
+  .link-underline:hover {
+    background-size: 100% 1px, 100% 1px;
+    transition-duration: 180ms;
+  }
 }
 
-/* Project plate — one coordinated hover, no colour shouting */
-.plate .diagram-artifact {
+/* Project plate — coordinated frame lift (2px), photo zoom (1.025, no edge gap), 3px arrow */
+.plate-frame {
   transition:
-    translate 0.9s var(--ease-out-expo),
-    scale 0.9s var(--ease-out-expo);
+    transform var(--m-out) var(--m-ease),
+    border-color var(--m-out) var(--m-ease),
+    box-shadow var(--m-out) var(--m-ease);
 }
-.plate:hover .diagram-artifact {
-  translate: 0 -10px;
+.plate-photo {
+  transition: transform var(--m-image-out) var(--m-ease-enter);
+  will-change: transform;
+}
+.plate .diagram-artifact {
+  transition: transform var(--m-image-out) var(--m-ease-enter);
 }
 .plate .plate-title {
   background: linear-gradient(currentColor, currentColor) 0 100% / 0% 2px no-repeat;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   padding-bottom: 0.04em;
-  transition: background-size 0.8s var(--ease-out-expo);
-}
-.plate:hover .plate-title {
-  background-size: 100% 2px;
+  transition: background-size 240ms var(--m-ease);
 }
 .plate .plate-arrow {
   display: inline-block;
-  transition: translate 0.5s var(--ease-out-expo);
-}
-.plate:hover .plate-arrow {
-  translate: 6px 0;
+  transition: transform var(--m-out) var(--m-ease);
 }
 .plate .plate-meta {
-  transition: color 0.4s var(--ease-out-expo);
-}
-.plate:hover .plate-meta {
-  color: var(--ink);
+  transition: color var(--m-out) var(--m-ease);
 }
 
-/* Index list — hovering one row quietly recedes the others */
-.focus-list > * {
-  transition: opacity 0.45s var(--ease-out-expo);
+@media (hover: hover) and (pointer: fine) {
+  .plate:hover .plate-frame {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--ink) 28%, var(--line));
+    box-shadow: 0 12px 24px -12px color-mix(in srgb, var(--ink) 10%, transparent);
+    transition-duration: var(--m-card-in);
+  }
+  .plate:hover .plate-photo {
+    transform: scale(1.025);
+    transition-duration: var(--m-image-in);
+  }
+  .plate:hover .diagram-artifact {
+    transform: translateY(-4px);
+    transition-duration: var(--m-image-in);
+  }
+  .plate:hover .plate-title {
+    background-size: 100% 2px;
+  }
+  .plate:hover .plate-arrow {
+    transform: translateX(3px);
+    transition-duration: var(--m-in);
+  }
+  .plate:hover .plate-meta {
+    color: var(--ink);
+    transition-duration: var(--m-in);
+  }
 }
-.focus-list:has(> *:hover) > *:not(:hover) {
-  opacity: 0.38;
+
+/* Index list — hovering one row quietly recedes the others; 3px arrow step */
+.focus-list > * {
+  transition: opacity 220ms var(--m-ease);
 }
 .focus-list .row-arrow {
   display: inline-block;
-  transition: translate 0.5s var(--ease-out-expo);
+  transition: transform var(--m-out) var(--m-ease);
 }
-.focus-list > *:hover .row-arrow {
-  translate: 6px 0;
+@media (hover: hover) and (pointer: fine) {
+  .focus-list:has(> *:hover) > *:not(:hover) {
+    opacity: 0.42;
+  }
+  .focus-list > *:hover .row-arrow {
+    transform: translateX(3px);
+    transition-duration: var(--m-in);
+  }
+}
+
+/* Hero media settle — once on load, never hides or fades opacity (motion.md §Hero entrance) */
+@keyframes hero-media-settle {
+  from {
+    transform: scale(1.035);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.hero-media-settle {
+  animation: hero-media-settle 950ms var(--m-ease-enter) both;
 }
 
 /* Contextual cursor: hide system cursor only where the label takes over */

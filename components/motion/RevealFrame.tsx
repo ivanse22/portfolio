@@ -3,10 +3,10 @@
 import type { ReactNode } from "react";
 
 /**
- * Clean container frame for project visuals.
- * Avoids clip-path / scale transforms during route changes so `<ViewTransition>`
- * captures an unclipped, 1:1 geometry snapshot for smooth morphing.
+ * Clean container wrapper for project visuals.
+ * Inner `.plate-frame` owns `overflow-hidden` and `border` so its 2px hover lift
+ * is never clipped, while `<ViewTransition>` captures clean 1:1 geometry.
  */
 export function RevealFrame({ children, className }: { children: ReactNode; className?: string }) {
-  return <div className={`overflow-hidden rounded-[4px] ${className ?? ""}`}>{children}</div>;
+  return <div className={className}>{children}</div>;
 }

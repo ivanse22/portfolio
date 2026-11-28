@@ -17,7 +17,9 @@ export function Page({ children, className }: { children: ReactNode; className?:
   return (
     <ViewTransition enter={enterExit} exit={enterExit} default="none">
       <div className="flex-1 flex flex-col">
-        <main className={`flex-1 ${className ?? ""}`}>{children}</main>
+        <main id="main-content" className={`flex-1 ${className ?? ""}`}>
+          {children}
+        </main>
         <BlueprintFooter />
       </div>
     </ViewTransition>

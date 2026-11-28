@@ -3,13 +3,11 @@ import Link from "next/link";
 import type { Project } from "@/lib/projects";
 import { BlueprintDiagram } from "@/components/blocks/BlueprintDiagram";
 import { RevealFrame } from "@/components/motion/RevealFrame";
-import { Rise } from "@/components/motion/Reveal";
 
 /**
  * Featured project plate — 12-column side-by-side architecture:
  * - Left column (5 cols): Index, Title, Description, and structured Case Metadata (Client/Role/Timeline/Year, Stack, Outcome).
- * - Right column (7 cols): Large visual container.
- * Both Title and Visual are shared ViewTransition elements that morph into the Case Study page.
+ * - Right column (7 cols): Large 16:10 visual container with coordinated frame lift (2px) & photo zoom (1.025).
  */
 export function ProjectPlate({ project, total }: { project: Project; total: number }) {
   return (
@@ -22,7 +20,7 @@ export function ProjectPlate({ project, total }: { project: Project; total: numb
         aria-label={`${project.title} — read case study`}
       >
         {/* ——— Left Column: Title, Description & Case Metadata ——— */}
-        <Rise className="lg:col-span-5 flex flex-col justify-between space-y-8">
+        <div className="lg:col-span-5 flex flex-col justify-between space-y-8">
           {/* Top block: Index + Title + Description */}
           <div className="space-y-4">
             <div className="flex items-center gap-3 font-mono text-xs text-[var(--ink-3)]">
@@ -47,30 +45,30 @@ export function ProjectPlate({ project, total }: { project: Project; total: numb
           <div className="space-y-5 pt-6 border-t border-[var(--line)]">
             <dl className="grid grid-cols-2 gap-y-4 gap-x-6 text-sm">
               <div>
-                <dt className="font-mono text-[11px] text-[var(--ink-3)]">Client</dt>
+                <dt className="font-mono text-xs text-[var(--ink-3)]">Client</dt>
                 <dd className="font-medium mt-0.5">{project.client}</dd>
               </div>
               <div>
-                <dt className="font-mono text-[11px] text-[var(--ink-3)]">Role</dt>
+                <dt className="font-mono text-xs text-[var(--ink-3)]">Role</dt>
                 <dd className="font-medium mt-0.5">{project.role}</dd>
               </div>
               <div>
-                <dt className="font-mono text-[11px] text-[var(--ink-3)]">Timeline</dt>
+                <dt className="font-mono text-xs text-[var(--ink-3)]">Timeline</dt>
                 <dd className="font-medium mt-0.5">{project.timeline}</dd>
               </div>
               <div>
-                <dt className="font-mono text-[11px] text-[var(--ink-3)]">Year</dt>
-                <dd className="font-medium mt-0.5">{project.year}</dd>
+                <dt className="font-mono text-xs text-[var(--ink-3)]">Year</dt>
+                <dd className="font-medium mt-0.5 tabular-nums">{project.year}</dd>
               </div>
             </dl>
 
             <div className="pt-4 border-t border-[var(--line)] space-y-2">
-              <div className="font-mono text-[11px] text-[var(--ink-3)]">Methods &amp; Stack</div>
+              <div className="font-mono text-xs text-[var(--ink-3)]">Methods &amp; Stack</div>
               <div className="flex flex-wrap gap-1.5">
                 {project.tools.map((t) => (
                   <span
                     key={t}
-                    className="font-mono text-[11px] text-[var(--ink-2)] px-2.5 py-0.5 rounded-[2px] bg-[var(--bg-2)]"
+                    className="font-mono text-xs text-[var(--ink-2)] px-2.5 py-0.5 rounded-[2px] bg-[var(--bg-2)]"
                   >
                     {t}
                   </span>
@@ -80,7 +78,7 @@ export function ProjectPlate({ project, total }: { project: Project; total: numb
 
             <div className="pt-4 border-t border-[var(--line)] space-y-3">
               <div>
-                <div className="font-mono text-[11px] text-[var(--ink-3)]">Outcome</div>
+                <div className="font-mono text-xs text-[var(--ink-3)]">Outcome</div>
                 <p className="text-sm font-medium mt-0.5 leading-relaxed">
                   {project.headlineResult}
                 </p>
@@ -92,20 +90,20 @@ export function ProjectPlate({ project, total }: { project: Project; total: numb
               </span>
             </div>
           </div>
-        </Rise>
+        </div>
 
         {/* ——— Right Column: Visual Content Container (Fixed 16:10 aspect ratio, zero responsive crop) ——— */}
         <div className="lg:col-span-7">
           <div className="w-full aspect-[16/10]">
             <RevealFrame className="w-full h-full">
               {project.heroImage ? (
-                <div className="relative w-full h-full rounded-[4px] border border-[var(--line)] overflow-hidden bg-[var(--bg-2)]">
+                <div className="plate-frame relative w-full h-full rounded-[4px] border border-[var(--line)] overflow-hidden bg-[var(--bg-2)]">
                   <Image
                     src={project.heroImage.src}
                     width={project.heroImage.width}
                     height={project.heroImage.height}
                     alt={project.heroImage.alt}
-                    className="diagram-artifact w-full h-full object-cover"
+                    className="plate-photo w-full h-full object-cover"
                     sizes="(max-width: 1024px) 100vw, 58vw"
                   />
                 </div>

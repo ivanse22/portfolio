@@ -54,7 +54,7 @@ export function BlueprintHUD() {
             {Array.from({ length: 12 }).map((_, i) => (
               <div
                 key={i}
-                className="h-full border-x border-[var(--signal)]/20 bg-[var(--signal)]/[0.025] hidden md:flex items-start justify-center pt-20 font-mono text-[9px] text-[var(--signal)]"
+                className="h-full border-x border-[var(--signal)]/20 bg-[var(--signal)]/[0.025] hidden md:flex items-start justify-center pt-20 font-mono text-[10px] text-[var(--signal)]"
               >
                 {String(i + 1).padStart(2, "0")}
               </div>
@@ -63,18 +63,23 @@ export function BlueprintHUD() {
         </div>
       )}
 
-      {/* Calm, High-Clarity Navigation Header */}
+      {/* Calm, Opaque-Anchored Navigation Header */}
       <header
         style={{ viewTransitionName: "site-header" }}
-        className="sticky top-0 z-30 bg-[var(--bg)]/90 backdrop-blur-md border-b border-[var(--line)] px-[var(--pad-x)] print:hidden"
+        className="sticky top-0 z-30 bg-[var(--bg)]/95 backdrop-blur-md border-b border-[var(--line)] px-[var(--pad-x)] print:hidden"
       >
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
+
         <div className="max-w-[1360px] mx-auto flex items-center justify-between h-16 gap-6">
           {/* Brand identity */}
           <Link
             href="/"
-            className="group flex items-center gap-3 text-sm font-medium tracking-tight"
+            aria-current={pathname === "/" ? "page" : undefined}
+            className="group inline-flex items-center gap-3 min-h-[44px] text-sm font-medium tracking-tight"
           >
-            <span className="inline-grid place-items-center w-6 h-6 rounded-[2px] bg-[var(--ink)] text-[var(--bg)] font-mono text-[11px] font-semibold group-hover:bg-[var(--signal)] group-hover:text-white transition-colors">
+            <span className="inline-grid place-items-center w-6 h-6 rounded-[2px] bg-[var(--ink)] text-[var(--bg)] font-mono text-[11px] font-semibold group-hover:bg-[var(--signal)] group-hover:text-white transition-colors duration-150">
               IS
             </span>
             <span className="text-[var(--ink)] font-semibold">Ivan Sierra</span>
@@ -84,22 +89,21 @@ export function BlueprintHUD() {
           </Link>
 
           {/* Center Navigation */}
-          <nav aria-label="Main navigation" className="hidden md:flex items-center gap-7">
+          <nav aria-label="Main navigation" className="hidden md:flex items-stretch h-full gap-7">
             {navItems.map((item) => {
               const active = pathname.startsWith(item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`nav-link relative py-1 text-sm transition-colors ${
-                    active
-                      ? "text-[var(--ink)] font-medium"
-                      : "text-[var(--ink-2)] hover:text-[var(--ink)]"
+                  aria-current={active ? "page" : undefined}
+                  className={`nav-link nav-link--bar inline-flex items-center h-full text-sm ${
+                    active ? "text-[var(--ink)] font-medium" : "text-[var(--ink-2)]"
                   }`}
                 >
                   {item.label}
                   {active && (
-                    <span className="absolute inset-x-0 -bottom-[19px] h-[2px] bg-[var(--signal)]" />
+                    <span className="absolute inset-x-0 -bottom-px h-[2px] bg-[var(--signal)]" />
                   )}
                 </Link>
               );
@@ -111,7 +115,8 @@ export function BlueprintHUD() {
             <button
               type="button"
               onClick={() => setGridOn((v) => !v)}
-              className={`hidden lg:inline-flex items-center px-2 py-1 rounded-[2px] font-mono text-[11px] border transition-colors cursor-pointer ${
+              aria-pressed={gridOn}
+              className={`hidden lg:inline-flex hud-pill border cursor-pointer ${
                 gridOn
                   ? "border-[var(--signal)] text-[var(--signal)] bg-[var(--surface)]"
                   : "border-transparent text-[var(--ink-3)] hover:text-[var(--ink)]"
@@ -124,39 +129,44 @@ export function BlueprintHUD() {
             <button
               type="button"
               onClick={toggleTheme}
-              className="px-2.5 py-1 rounded-[2px] font-mono text-[11px] text-[var(--ink-2)] hover:text-[var(--ink)] border border-[var(--line)] bg-[var(--surface)] transition-colors cursor-pointer"
+              aria-label={dark ? "Switch to light theme" : "Switch to dark theme"}
+              className="hud-pill text-[var(--ink-2)] hover:text-[var(--ink)] border border-[var(--line)] bg-[var(--surface)] cursor-pointer"
               title="Switch light/dark theme (Shortcut: T)"
             >
               {dark ? "Light" : "Dark"}
             </button>
 
-            <Link
-              href="/cv"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-[3px] text-xs font-medium bg-[var(--ink)] text-[var(--bg)] hover:bg-[var(--signal)] hover:text-white transition-colors"
-            >
+            <Link href="/cv" className="bp-btn bp-btn--primary bp-btn--sm">
               <span>Resume / CV</span>
-              <span className="font-mono text-[11px]">→</span>
+              <span className="bp-btn__icon">→</span>
             </Link>
           </div>
         </div>
 
-        {/* Mobile navigation row */}
-        <div className="flex md:hidden items-center gap-6 py-2.5 border-t border-[var(--line)] overflow-x-auto text-xs">
+        {/* Mobile navigation row — equal edges + 44px touch targets */}
+        <nav
+          aria-label="Mobile navigation"
+          className="max-w-[1360px] mx-auto flex md:hidden items-center gap-6 border-t border-[var(--line)] overflow-x-auto text-xs"
+        >
           {navItems.map((item) => {
             const active = pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={`whitespace-nowrap ${
-                  active ? "text-[var(--signal)] font-semibold" : "text-[var(--ink-2)]"
+                aria-current={active ? "page" : undefined}
+                className={`relative inline-flex items-center min-h-[44px] whitespace-nowrap ${
+                  active ? "text-[var(--ink)] font-semibold" : "text-[var(--ink-2)]"
                 }`}
               >
                 {item.label}
+                {active && (
+                  <span className="absolute inset-x-0 bottom-0 h-[2px] bg-[var(--signal)]" />
+                )}
               </Link>
             );
           })}
-        </div>
+        </nav>
       </header>
     </>
   );

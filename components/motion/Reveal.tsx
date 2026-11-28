@@ -1,62 +1,30 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { motion, useReducedMotion } from "motion/react";
 
 /**
  * Tracks whether the app has completed its initial load.
- * On subsequent client-side route navigations, `<ViewTransition>` handles the
- * page-level entrance—so elements starts visible immediately in the first render
- * pass, preventing `::view-transition-new` from capturing an `opacity: 0` snapshot.
+ * Per design-taste-frontend (motion.md):
+ * - The hero enters once on load (700ms masked lines 80ms apart; 520ms 12px rise 60ms apart).
+ * - Scrolling moves nothing (no stock IntersectionObserver scroll reveals).
+ * - On subsequent client-side route navigations, `<ViewTransition>` handles the
+ *   page-level entrance so elements render immediately at rest.
  */
 let appHasLoadedOnce = false;
 
-function useEnterViewport<T extends HTMLElement>() {
-  const ref = useRef<T | null>(null);
-  const [visible, setVisible] = useState(() => appHasLoadedOnce);
+function useInitialLoadEntrance() {
+  const reduce = useReducedMotion();
+  const [shouldAnimate] = useState(() => !appHasLoadedOnce);
 
   useEffect(() => {
     appHasLoadedOnce = true;
-    if (visible) return;
+  }, []);
 
-    const el = ref.current;
-    if (!el) {
-      setVisible(true);
-      return;
-    }
-
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight * 0.96) {
-      setVisible(true);
-      return;
-    }
-
-    if (typeof IntersectionObserver === "undefined") {
-      setVisible(true);
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setVisible(true);
-            io.disconnect();
-            break;
-          }
-        }
-      },
-      { threshold: 0.05, rootMargin: "0px 0px -4% 0px" },
-    );
-
-    io.observe(el);
-    return () => io.disconnect();
-  }, [visible]);
-
-  return { ref, visible };
+  return shouldAnimate && !reduce;
 }
 
-/** Masked line reveal — text stays real in the DOM (a11y/SEO safe). */
+/** Hero masked line reveal — 700ms, cubic-bezier(0.22, 1, 0.36, 1), once on load. */
 export function Reveal({
   children,
   delay = 0,
@@ -66,20 +34,17 @@ export function Reveal({
   delay?: number;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
-  const skipInitial = reduce || appHasLoadedOnce;
-  const { ref, visible } = useEnterViewport<HTMLSpanElement>();
+  const animateEntrance = useInitialLoadEntrance();
 
   return (
     <span
-      ref={ref}
       className={`block overflow-hidden pt-[0.06em] -mt-[0.06em] pb-[0.1em] -mb-[0.1em] ${className ?? ""}`}
     >
       <motion.span
         className="block"
-        initial={skipInitial ? false : { y: "105%" }}
-        animate={skipInitial || visible ? { y: "0%" } : { y: "105%" }}
-        transition={{ duration: 0.75, delay, ease: [0.16, 1, 0.3, 1] }}
+        initial={animateEntrance ? { y: "104%" } : false}
+        animate={{ y: "0%" }}
+        transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
       >
         {children}
       </motion.span>
@@ -87,7 +52,7 @@ export function Reveal({
   );
 }
 
-/** Soft rise for blocks. One choreography, used sparingly. */
+/** Hero secondary block rise — 12px, 520ms, cubic-bezier(0.22, 1, 0.36, 1), once on load. */
 export function Rise({
   children,
   delay = 0,
@@ -97,17 +62,14 @@ export function Rise({
   delay?: number;
   className?: string;
 }) {
-  const reduce = useReducedMotion();
-  const skipInitial = reduce || appHasLoadedOnce;
-  const { ref, visible } = useEnterViewport<HTMLDivElement>();
+  const animateEntrance = useInitialLoadEntrance();
 
   return (
     <motion.div
-      ref={ref}
       className={className}
-      initial={skipInitial ? false : { opacity: 0, y: 16 }}
-      animate={skipInitial || visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-      transition={{ duration: 0.65, delay, ease: [0.22, 1, 0.36, 1] }}
+      initial={animateEntrance ? { opacity: 0, y: 12 } : false}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.52, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
     </motion.div>

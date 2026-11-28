@@ -16,14 +16,14 @@ export default function WorkIndexPage() {
       <div className="max-w-[1360px] mx-auto">
         <header className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pb-16 md:pb-24">
           <h1 className="lg:col-span-8 text-[clamp(48px,7vw,108px)] font-semibold leading-[0.92] tracking-[-0.045em]">
-            <Reveal>
+            <Reveal delay={0}>
               All <span className="voice-serif">work</span>
-              <span className="ml-3 align-baseline font-mono text-[0.22em] font-normal tracking-normal text-[var(--ink-3)]">
+              <span className="ml-3 align-baseline font-mono text-[0.22em] font-normal tracking-normal tabular-nums text-[var(--ink-3)]">
                 ({String(projects.length).padStart(2, "0")})
               </span>
             </Reveal>
           </h1>
-          <Rise className="lg:col-span-4">
+          <Rise delay={0.14} className="lg:col-span-4">
             <p className="text-base text-[var(--ink-2)] leading-relaxed">
               Enterprise design systems, information architecture with honors, product
               research and conversion-focused UI — 2022 to today.
